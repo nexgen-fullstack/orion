@@ -366,6 +366,16 @@
       return g;
     });
     let ww = 0;
+    // the same name, drawn again behind the planet (z-order: back name < globe < front name)
+    const back = document.createElement('div');
+    back.className = 'hero__back';
+    back.setAttribute('aria-hidden', 'true');
+    hero.insertBefore(back, globeWrap || title.nextSibling);
+    const syncBack = () => {
+      back.innerHTML = giant.outerHTML;
+      back.style.left = (title.offsetLeft + giant.offsetLeft) + 'px';
+      back.style.top = (title.offsetTop + giant.offsetTop) + 'px';
+    };
     onLayout(() => {
       fit(giant, hero);
       const gr = giant.getBoundingClientRect();
@@ -383,7 +393,9 @@
         g.style.top = (r.top - tr.top + fs * (right ? 0.16 : 0.74)).toFixed(1) + 'px';
         g.style.setProperty('--gs', Math.round(clamp(fs * 0.3, 16, 58)) + 'px');
       });
+      syncBack();
     });
+    const backGiant = () => back.firstElementChild;
     if (!reduce) {
       // one slow beam of starlight crosses the whole word every few seconds
       let shineT = 0;
@@ -393,19 +405,22 @@
         if (!shineT) shineT = now + 1200;
         const u = (now - shineT) % 7000 / 1700;
         if (now < shineT || u > 1) {
-          if (shineOn) { giant.style.setProperty('--shine', '-9999px'); shineOn = false; }
+          if (shineOn) { [giant, backGiant()].forEach(el => el && el.style.setProperty('--shine', '-9999px')); shineOn = false; }
           return;
         }
         shineOn = true;
         const e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
-        giant.style.setProperty('--shine', ((-1.75 + 1.5 * e) * ww).toFixed(1) + 'px');
+        const v = ((-1.75 + 1.5 * e) * ww).toFixed(1) + 'px';
+        [giant, backGiant()].forEach(el => el && el.style.setProperty('--shine', v));
       });
     }
 
     // the Orion constellation behind the hero: draws itself after the intro, floats with pointer / phone tilt and scroll
     const sky = $('.hero__sky');
     const skySvg = sky && $('.ori', sky);
-    onReady(() => setTimeout(() => giant.classList.add('is-lit'), 2300));
+    onReady(() => setTimeout(() => { giant.classList.add('is-lit'); if (backGiant()) backGiant().classList.add('is-lit'); }, 2300));
+    // a few seconds after the name appears, the planet comes forward through it
+    if (!reduce) onReady(() => setTimeout(() => hero.classList.add('is-emerge'), 3200));
     if (skySvg) {
       onReady(() => { skySvg.style.setProperty('--d0', '.35s'); skySvg.classList.add('is-draw'); });
       if (!reduce) {
@@ -444,8 +459,8 @@
       onFrame(() => {
         if (S.y > S.vh * 1.3) return;
         const p = clamp(S.y / S.vh, 0, 1);
-        title.style.transform = 'translate3d(0,' + (S.y * 0.42).toFixed(1) + 'px,0)';
-        title.style.opacity = (1 - p * 1.1).toFixed(3);
+        title.style.transform = back.style.transform = 'translate3d(0,' + (S.y * 0.42).toFixed(1) + 'px,0)';
+        title.style.opacity = back.style.opacity = (1 - p * 1.1).toFixed(3);
         bottom.style.opacity = (1 - p * 1.6).toFixed(3);
         if (globeWrap) globeWrap.style.transform = 'translate3d(0,' + (S.y * 0.22).toFixed(1) + 'px,0) scale(' + (1 + p * 0.35).toFixed(3) + ')';
       });
@@ -520,7 +535,7 @@ void main(){
     vec3 L=normalize(vec3(-.5,.55,.68));
     float lam=clamp(dot(pf,L),0.,1.);
     float fr=pow(1.-z,2.);
-    float a=.6+.3*fr;
+    float a=.46+.3*fr;
     vec3 col=mix(vec3(.012,.02,.075),vec3(.04,.075,.21),lam)*a;
     col+=vec3(.6,.74,1.)*grid(gf,aa)*.07*(1.-df.x);
     col+=V*db.x*.17*uLandA;
@@ -648,6 +663,8 @@ void main(){
     let dirty = true;
     let zoom = 1;
     let zoomT = 1;
+    let ek = 1;  // the planet's push toward the viewer when it comes in front of the name
+    let emergeT = 0;
     const resize = () => {
       size = wrap.clientWidth;
       rad = S.vw <= 760 ? 0.74 : 0.66;
@@ -670,7 +687,7 @@ void main(){
     const view = () => {
       const p = reduce ? 0 : clamp(S.y / S.vh, 0, 1);
       const k = reduce ? 1 : 1 + p * 0.35;
-      return { x: cx + g.x * k, y: cyDoc - S.y + (reduce ? 0 : S.y * 0.22) + g.y * k, r: rad * zoom * size / 2 * k };
+      return { x: cx + g.x * k, y: cyDoc - S.y + (reduce ? 0 : S.y * 0.22) + g.y * k, r: rad * zoom * ek * size / 2 * k };
     };
 
     // pointer: tilt toward the cursor, magnetic pull, drag to spin, more traffic on hover; touch: spin & pinch-zoom
@@ -823,7 +840,7 @@ void main(){
     const drawFx = now => {
       const W = fx.width / fq;
       const C = W / 2;
-      const R = rad * zoom * C;
+      const R = rad * zoom * ek * C;
       ctx.setTransform(fq, 0, 0, fq, 0, 0);
       ctx.clearRect(0, 0, W, W);
       const scr = v => [C + v[0] * R, C - v[1] * R];
@@ -1005,6 +1022,8 @@ void main(){
       g.x += (g.tx - g.x) * 0.09; g.y += (g.ty - g.y) * 0.09;
       hov += (hovT - hov) * 0.08;
       zoom += (zoomT - zoom) * 0.22;
+      if (!emergeT && hero.classList.contains('is-emerge')) emergeT = now;
+      if (emergeT) { const u = clamp((now - emergeT) / 2200, 0, 1); ek = 1 + 0.1 * (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2); }
       const busy = drag || hovT > 0.5;
       if (!drag) {
         dYaw += vYaw; vYaw *= 0.94;
@@ -1020,8 +1039,8 @@ void main(){
       gl.uniform2f(U.uR, cv.width, cv.height);
       gl.uniform1f(U.uT, reduce ? 2.4 : t);
       gl.uniform2f(U.uRot, yaw, pitch);
-      gl.uniform1f(U.uRad, rad * zoom);
-      gl.uniform1f(U.uStep, clamp(5.6 / (rad * zoom * size / 2), 0.009, 0.05));
+      gl.uniform1f(U.uRad, rad * zoom * ek);
+      gl.uniform1f(U.uStep, clamp(5.6 / (rad * zoom * ek * size / 2), 0.009, 0.05));
       gl.uniform1f(U.uHov, hov);
       gl.uniform1f(U.uLandA, landA);
       gl.clear(gl.COLOR_BUFFER_BIT);
@@ -2040,7 +2059,8 @@ void main(){
     const cv = $('.cosmos');
     const ctx = cv && cv.getContext('2d');
     if (!ctx) return;
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    // phones draw the star field at 1x: the stars are points anyway and it halves the pixels to fill
+    const dpr = Math.min(window.devicePixelRatio || 1, fine ? 1.5 : 1);
     const sprite = (r, g, b) => {
       const c = document.createElement('canvas');
       c.width = c.height = 64;
@@ -2054,25 +2074,11 @@ void main(){
       x.fillRect(0, 0, 64, 64);
       return c;
     };
-    const cloud = (r, g, b) => {
-      const c = document.createElement('canvas');
-      c.width = c.height = 128;
-      const x = c.getContext('2d');
-      const gr = x.createRadialGradient(64, 64, 0, 64, 64, 64);
-      gr.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',1)');
-      gr.addColorStop(0.45, 'rgba(' + r + ',' + g + ',' + b + ',.35)');
-      gr.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
-      x.fillStyle = gr;
-      x.fillRect(0, 0, 128, 128);
-      return c;
-    };
     const GLOW = [sprite(200, 220, 255), sprite(255, 200, 160), sprite(190, 170, 255)];
     const TINT = ['226,236,255', '255,255,255', '255,238,220', '200,216,255', '255,218,196', '214,206,255'];
-    const NEB = [[46, 72, 255, 0.15], [255, 111, 174, 0.08], [54, 198, 216, 0.08], [143, 125, 255, 0.12], [40, 90, 255, 0.11], [255, 170, 100, 0.05]].map(c => ({ img: cloud(c[0], c[1], c[2]), a: c[3] }));
     let W = 0;
     let H = 0;
     let stars = [];
-    let blobs = [];
     const seed = () => {
       const n = Math.round(clamp(W * H / (fine ? 4300 : 2600), 150, 520));
       stars = Array.from({ length: n }, () => {
@@ -2085,7 +2091,6 @@ void main(){
           c: TINT[(Math.random() * TINT.length) | 0], g: GLOW[(Math.random() * GLOW.length) | 0]
         };
       });
-      blobs = NEB.map((c, i) => ({ ...c, x: (0.15 + Math.random() * 0.7) * W, y: (i + Math.random()) * H * 0.75, s: (0.75 + Math.random() * 0.7) * Math.max(W, H) }));
     };
     const size = () => {
       const w = window.innerWidth;
@@ -2117,8 +2122,8 @@ void main(){
     onFrame(now => {
       if (document.hidden || !W) return;
       const busy = Math.abs(S.vy) > 0.3 || Math.abs(warp) > 0.01 || shooters.length || (jump.t && now - jump.t < 1400) || !doc.classList.contains('is-ready');
-      // phones: 30 fps while the page rests, full speed while it moves
-      if (!fine && !busy && now - last < 31) return;
+      // phones: 25 fps while the page rests, full speed while it moves
+      if (!fine && !busy && now - last < 40) return;
       const dt = last ? Math.min(50, now - last) : 16;
       last = now;
       warp += (clamp(S.vy / 46, -1, 1) - warp) * 0.14;
@@ -2128,18 +2133,6 @@ void main(){
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, W, H);
       ctx.globalCompositeOperation = 'lighter';
-
-      // nebulae: very slow, very faint, they make every section feel like a different part of the sky
-      const VH = H * 0.75 * NEB.length;
-      for (const b of blobs) {
-        let y = (b.y - S.y * 0.05) % VH;
-        if (y < 0) y += VH;
-        if (y > VH - b.s) y -= VH;
-        if (y + b.s / 2 < 0 || y - b.s / 2 > H) continue;
-        ctx.globalAlpha = b.a;
-        ctx.drawImage(b.img, b.x - b.s / 2 - px * 30, y - b.s / 2, b.s, b.s);
-      }
-      ctx.globalAlpha = 1;
 
       const streak = Math.abs(warp) > 0.06;
       const ju = jump.t ? (now - jump.t) / 1300 : 2;
@@ -2184,6 +2177,9 @@ void main(){
           ctx.globalAlpha = Math.min(1, a);
           ctx.drawImage(s.g, x - g / 2, y - g / 2, g, g);
           ctx.globalAlpha = 1;
+        } else if (s.r < 1.05) {
+          ctx.fillStyle = 'rgba(' + s.c + ',' + a.toFixed(3) + ')';
+          ctx.fillRect(x - s.r, y - s.r, s.r * 2, s.r * 2);
         } else {
           ctx.fillStyle = 'rgba(' + s.c + ',' + a.toFixed(3) + ')';
           ctx.beginPath();
@@ -2293,6 +2289,232 @@ void main(){
         add(lx, ly, 1, 0.025, 700);
       }, { passive: true });
     }
+  });
+
+  /* ---------- "How it works": every card is its own patch of sky. When a card comes into view a comet
+     flies in and bursts on its icon (flash, shock ring, stardust, a wave of lit stars); the card then stays lit.
+     Under the mouse the nearby stars flare up and the sky leans toward the pointer. ---------- */
+  safe('steps', () => {
+    const cards = $$('.step:not(.step--cta)');
+    if (!cards.length) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, fine ? 1.5 : 1.25);
+    const TINT = ['226,236,255', '255,255,255', '255,236,220', '200,214,255', '214,206,255'];
+    const glow = (() => {
+      const c = document.createElement('canvas');
+      c.width = c.height = 64;
+      const x = c.getContext('2d');
+      const g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+      g.addColorStop(0, 'rgba(255,255,255,1)');
+      g.addColorStop(0.18, 'rgba(220,230,255,.75)');
+      g.addColorStop(0.45, 'rgba(160,170,255,.16)');
+      g.addColorStop(1, 'rgba(140,150,255,0)');
+      x.fillStyle = g;
+      x.fillRect(0, 0, 64, 64);
+      return c;
+    })();
+    const all = cards.map((el, i) => {
+      const cv = $('.step__sky', el);
+      const ctx = cv && cv.getContext('2d');
+      return ctx && { el, cv, ctx, i, rgb: el.dataset.rgb || '143,125,255', ico: $('.step__ico', el),
+        W: 0, H: 0, stars: [], P: [], comet: null, flash: 0, fx: 0, fy: 0, on: false, full: false,
+        hx: -1, hy: -1, px: 0, py: 0, last: 0, drawn: 0, nextMini: 0 };
+    }).filter(Boolean);
+
+    const seed = s => {
+      s.W = s.el.clientWidth;
+      s.H = s.el.clientHeight;
+      if (!s.W || !s.H) return;
+      s.cv.width = Math.round(s.W * dpr);
+      s.cv.height = Math.round(s.H * dpr);
+      const n = Math.round(clamp(s.W * s.H / 850, 90, 280));
+      s.stars = Array.from({ length: n }, () => {
+        const z = Math.random();
+        return { x: Math.random(), y: Math.random(), z, r: 0.35 + z * 1.15 + (Math.random() < 0.05 ? 0.9 : 0),
+          a: 0.25 + Math.random() * 0.6, tw: 0.8 + Math.random() * 3, ph: Math.random() * 6.283,
+          c: Math.random() < 0.3 ? s.rgb : TINT[(Math.random() * TINT.length) | 0] };
+      });
+      s.drawn = 0;
+    };
+    onLayout(() => all.forEach(seed));
+
+    const target = s => s.ico
+      ? { x: s.ico.offsetLeft + s.ico.offsetWidth / 2, y: s.ico.offsetTop + s.ico.offsetHeight / 2 }
+      : { x: s.W * 0.8, y: s.H * 0.2 };
+    const explode = (s, x, y, n) => {
+      s.flash = 1; s.fx = x; s.fy = y;
+      for (let k = 0; k < n; k++) {
+        const a = Math.random() * 6.283;
+        const v = 0.05 + Math.random() * 0.28;
+        s.P.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 0, max: 700 + Math.random() * 900,
+          r: 0.8 + Math.random() * 1.9, c: Math.random() < 0.45 ? s.rgb : TINT[(Math.random() * TINT.length) | 0], star: Math.random() < 0.3 });
+      }
+      s.el.classList.add('is-burst', 'is-lit');
+      clearTimeout(s.bt);
+      s.bt = setTimeout(() => s.el.classList.remove('is-burst'), 1300);
+    };
+    // a comet comes in from the side the visitor is travelling from and lands on the card's icon
+    let queue = 0;
+    const burst = s => {
+      if (!s.W) seed(s);
+      const now = performance.now();
+      const at = Math.max(now, queue + 380);
+      queue = at;
+      const t = target(s);
+      const fromLeft = S.vw > 900;
+      s.comet = { t0: at, dur: 620, x0: fromLeft ? -40 : s.W * (0.1 + Math.random() * 0.3), y0: fromLeft ? s.H * (0.35 + Math.random() * 0.4) : -40, x1: t.x, y1: t.y, big: true };
+    };
+    const mini = s => {
+      const y = Math.random() * s.H * 0.6;
+      s.comet = { t0: performance.now(), dur: 900, x0: -30, y0: y, x1: s.W + 30, y1: y + s.H * (0.2 + Math.random() * 0.3), big: false };
+    };
+
+    if (reduce) {
+      // a still sky: drawn once, no motion
+      onLayout(() => all.forEach(s => {
+        const { ctx, W, H } = s;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, W, H);
+        s.stars.forEach(p => { ctx.fillStyle = 'rgba(' + p.c + ',' + p.a.toFixed(2) + ')'; ctx.fillRect(p.x * W, p.y * H, p.r * 1.6, p.r * 1.6); });
+        s.el.classList.add('is-lit');
+      }));
+      return;
+    }
+
+    const io2 = new IntersectionObserver(es => es.forEach(e => {
+      const s = all.find(x => x.el === e.target);
+      if (!s) return;
+      s.on = e.isIntersecting;
+      const full = e.intersectionRatio >= 0.55;
+      if (full && !s.full) burst(s);  // every time the card comes back into view
+      s.full = full;
+    }), { threshold: [0, 0.55] });
+    all.forEach(s => {
+      io2.observe(s.el);
+      if (fine) {
+        s.el.addEventListener('pointermove', e => {
+          const r = s.el.getBoundingClientRect();
+          s.hx = e.clientX - r.left; s.hy = e.clientY - r.top;
+        });
+        s.el.addEventListener('pointerleave', () => { s.hx = -1; });
+        s.el.addEventListener('pointerenter', () => { if (!s.comet) mini(s); });
+      }
+    });
+
+    const draw = (s, now, dt) => {
+      const { ctx, W, H } = s;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'lighter';
+      const hov = s.hx >= 0;
+      s.px += ((hov ? s.hx / W - 0.5 : 0) - s.px) * 0.08;
+      s.py += ((hov ? s.hy / H - 0.5 : 0) - s.py) * 0.08;
+      if (s.flash > 0) s.flash = Math.max(0, s.flash - dt / 1100);
+      const wave = (1 - s.flash) * Math.hypot(W, H);
+      const t = now / 1000;
+      for (let k = 0; k < s.stars.length; k++) {
+        const p = s.stars[k];
+        const x = p.x * W - s.px * p.z * 22;
+        const y = p.y * H - s.py * p.z * 16;
+        let a = p.a * (0.5 + 0.5 * Math.sin(t * p.tw + p.ph));
+        let r = p.r;
+        if (hov) {
+          const d = Math.hypot(x - s.hx, y - s.hy);
+          if (d < 120) { const q = 1 - d / 120; a += q * 0.9; r += q * 1.1; }
+        }
+        if (s.flash > 0) {
+          // the shock wave lights every star it passes
+          const d = Math.abs(Math.hypot(x - s.fx, y - s.fy) - wave);
+          if (d < 50) { const q = (1 - d / 50) * s.flash; a += q * 1.2; r += q * 1.6; }
+        }
+        ctx.fillStyle = 'rgba(' + p.c + ',' + Math.min(1, a).toFixed(3) + ')';
+        if (r < 1.1) ctx.fillRect(x - r, y - r, r * 2, r * 2);
+        else { ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); }
+      }
+      if (hov) {
+        ctx.globalAlpha = 0.35;
+        ctx.drawImage(glow, s.hx - 90, s.hy - 90, 180, 180);
+        ctx.globalAlpha = 1;
+      }
+
+      const c = s.comet;
+      if (c && now >= c.t0) {
+        const u = clamp((now - c.t0) / c.dur, 0, 1);
+        const e = c.big ? u * u * (3 - 2 * u) : u;
+        const x = c.x0 + (c.x1 - c.x0) * e;
+        const y = c.y0 + (c.y1 - c.y0) * e;
+        const dx = c.x1 - c.x0;
+        const dy = c.y1 - c.y0;
+        const L = Math.hypot(dx, dy) || 1;
+        const len = (c.big ? 170 : 110) * Math.min(1, u * 3);
+        const g = ctx.createLinearGradient(x, y, x - dx / L * len, y - dy / L * len);
+        g.addColorStop(0, 'rgba(255,255,255,.95)');
+        g.addColorStop(0.3, 'rgba(' + s.rgb + ',.55)');
+        g.addColorStop(1, 'rgba(' + s.rgb + ',0)');
+        ctx.strokeStyle = g;
+        ctx.lineCap = 'round';
+        ctx.lineWidth = c.big ? 2.4 : 1.5;
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - dx / L * len, y - dy / L * len); ctx.stroke();
+        const hs = c.big ? 34 : 20;
+        ctx.drawImage(glow, x - hs / 2, y - hs / 2, hs, hs);
+        if (u >= 1) { s.comet = null; if (c.big) explode(s, c.x1, c.y1, fine ? 54 : 40); }
+      }
+
+      if (s.flash > 0) {
+        const f = s.flash;
+        const R = 30 + (1 - f) * 120;
+        ctx.globalAlpha = f;
+        ctx.drawImage(glow, s.fx - R, s.fy - R, R * 2, R * 2);
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = 'rgba(' + s.rgb + ',' + (f * 0.9).toFixed(3) + ')';
+        ctx.lineWidth = 1 + f * 2.5;
+        ctx.beginPath(); ctx.arc(s.fx, s.fy, wave, 0, 6.283); ctx.stroke();
+        ctx.strokeStyle = 'rgba(255,255,255,' + (f * 0.5).toFixed(3) + ')';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(s.fx, s.fy, wave * 0.62, 0, 6.283); ctx.stroke();
+      }
+
+      for (let k = s.P.length - 1; k >= 0; k--) {
+        const p = s.P[k];
+        p.life += dt;
+        if (p.life > p.max) { s.P.splice(k, 1); continue; }
+        p.vx *= 0.985; p.vy = p.vy * 0.985 + 0.00012 * dt;
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        const q = 1 - p.life / p.max;
+        if (p.star) {
+          const r = p.r * 3.2 * q;
+          ctx.strokeStyle = 'rgba(' + p.c + ',' + q.toFixed(3) + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(p.x - r, p.y); ctx.lineTo(p.x + r, p.y);
+          ctx.moveTo(p.x, p.y - r); ctx.lineTo(p.x, p.y + r);
+          ctx.stroke();
+        }
+        ctx.fillStyle = 'rgba(' + p.c + ',' + q.toFixed(3) + ')';
+        ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(0.3, p.r * q), 0, 6.283); ctx.fill();
+      }
+      ctx.globalCompositeOperation = 'source-over';
+    };
+
+    onFrame(now => {
+      if (document.hidden) return;
+      for (let k = 0; k < all.length; k++) {
+        const s = all[k];
+        const busy = s.P.length || s.comet || s.flash > 0;
+        if (!s.on && !busy) { s.last = 0; continue; }
+        if (!s.W) seed(s);
+        if (!s.W) continue;
+        // a quiet card twinkles at ~30 fps; comets and bursts run at full speed
+        if (!busy && s.hx < 0 && now - s.drawn < 33) continue;
+        const dt = s.last ? Math.min(50, now - s.last) : 16;
+        s.last = now;
+        s.drawn = now;
+        if (s.on && !s.comet && now > s.nextMini) {
+          if (s.nextMini) mini(s);
+          s.nextMini = now + 4000 + Math.random() * 6000;
+        }
+        draw(s, now, dt);
+      }
+    });
   });
 
   measure();
