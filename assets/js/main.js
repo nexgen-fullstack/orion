@@ -2517,5 +2517,199 @@ void main(){
     });
   });
 
+  /* ---------- services: a sunrise over the planet, driven by the scroll.
+     The planet's silhouette appears out of the dark, a star climbs over its rim, flashes, light runs along the
+     horizon and lights the atmosphere; then the star breathes and a glint runs along the horizon now and then.
+     Every glow fades out inside the section, so there is no hard edge above it. ---------- */
+  safe('horizon', () => {
+    const sec = $('.services');
+    const cv = $('.horizon__cv');
+    const planet = $('.horizon__planet');
+    const ctx = cv && cv.getContext('2d');
+    if (!sec || !ctx || !planet) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, fine ? 1.5 : 1.25);
+    let W = 0;
+    let H = 0;
+    let rimY = 0;
+    let R = 0;
+    let top = 0;
+    let dirty = true;
+    onLayout(() => {
+      W = sec.clientWidth;
+      H = cv.clientHeight;
+      rimY = planet.offsetTop;
+      R = planet.offsetWidth / 2;
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(H * dpr);
+      dirty = true;
+    });
+    onMeasure(() => { top = docTop(sec); });
+    let on = false;
+    new IntersectionObserver(([e]) => { on = e.isIntersecting; }, { rootMargin: '25% 0px' }).observe(cv);
+
+    const ease = x => x * x * (3 - 2 * x);
+    const rgba = (c, a) => 'rgba(' + c + ',' + clamp(a, 0, 1).toFixed(3) + ')';
+    let rise = reduce ? 1 : 0;
+    let flash = 0;
+    let flashed = false;
+    let last = 0;
+
+    const draw = (p, t, dt) => {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      const cx = W / 2;
+      const cy = rimY + R;
+      const glowP = ease(clamp(p / 0.85, 0, 1));
+      const sunP = ease(clamp((p - 0.12) / 0.58, 0, 1));
+      const rimP = ease(clamp((p - 0.32) / 0.6, 0, 1));
+      if (sunP > 0.97 && !flashed) { flashed = true; flash = 1; }
+      if (p < 0.15) flashed = false;
+      flash = Math.max(0, flash - dt / 1300);
+      const br = (reduce ? 1 : 1 + 0.07 * Math.sin(t * 1.4)) * (1 + flash * 0.9);
+      const sunY = rimY + 30 - sunP * 34;
+      const room = sunY - 6;  // nothing may reach the top edge of the section
+
+      // atmosphere: a wide soft dome of light over the horizon
+      ctx.save();
+      ctx.translate(cx, rimY);
+      ctx.scale(1, (rimY * 0.9) / (W * 0.72));
+      let g = ctx.createRadialGradient(0, 0, 0, 0, 0, W * 0.72);
+      g.addColorStop(0, rgba('130,170,255', (0.42 + flash * 0.25) * glowP));
+      g.addColorStop(0.3, rgba('115,105,255', 0.17 * glowP));
+      g.addColorStop(0.65, rgba('255,111,174', 0.05 * glowP));
+      g.addColorStop(1, 'rgba(255,111,174,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(-W * 0.72, -W * 0.72, W * 1.44, W * 1.44);  // the planet, drawn next, covers the lower half
+      ctx.restore();
+
+      // the star, still partly behind the planet
+      const sr = Math.min(room, (22 + 30 * sunP) * 4.6 * br);
+      g = ctx.createRadialGradient(cx, sunY, 0, cx, sunY, sr);
+      g.addColorStop(0, rgba('255,255,255', sunP));
+      g.addColorStop(0.1, rgba('236,243,255', 0.92 * sunP));
+      g.addColorStop(0.3, rgba('150,190,255', 0.32 * sunP));
+      g.addColorStop(1, 'rgba(120,140,255,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(cx, sunY, sr, 0, 6.283); ctx.fill();
+
+      // slow faint rays
+      if (sunP > 0.05) {
+        ctx.globalCompositeOperation = 'lighter';
+        const L = Math.min(room, 150 + 60 * flash);
+        for (let k = 0; k < 10; k++) {
+          const a = (reduce ? 0 : t * 0.06) + k * 0.628;
+          const s = Math.sin(a);
+          if (s > 0.15) continue;  // rays only go up and sideways, the planet hides the rest
+          const len = L * (0.6 + 0.4 * Math.abs(Math.sin(k * 1.7)));
+          const w = 0.022;
+          ctx.fillStyle = rgba('190,210,255', 0.05 * sunP * br);
+          ctx.beginPath();
+          ctx.moveTo(cx, sunY);
+          ctx.lineTo(cx + Math.cos(a - w) * len, sunY + Math.sin(a - w) * len);
+          ctx.lineTo(cx + Math.cos(a + w) * len, sunY + Math.sin(a + w) * len);
+          ctx.fill();
+        }
+        ctx.globalCompositeOperation = 'source-over';
+      }
+
+      // the planet's night side hides everything below the horizon
+      ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.283);
+      g = ctx.createLinearGradient(0, rimY, 0, H);
+      g.addColorStop(0, '#0a1034'); g.addColorStop(0.4, '#070a20'); g.addColorStop(1, '#060818');
+      ctx.fillStyle = g;
+      ctx.fill();
+
+      // starlight scattered over the planet's surface under the star
+      ctx.save();
+      ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.283); ctx.clip();
+      ctx.translate(cx, rimY);
+      ctx.scale(1, Math.min(0.24, (H - rimY - 20) / (W * 0.62)));
+      g = ctx.createRadialGradient(0, 0, 0, 0, 0, W * 0.62);
+      g.addColorStop(0, rgba('150,185,255', (0.5 + flash * 0.3) * rimP));
+      g.addColorStop(0.35, rgba('95,110,255', 0.16 * rimP));
+      g.addColorStop(1, 'rgba(90,100,255,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(-W * 0.62, 0, W * 1.24, W * 0.62);
+      ctx.restore();
+
+      // the horizon line: a faint silhouette from the start, then light runs outwards from the star
+      const arc = (lw, style) => { ctx.lineWidth = lw; ctx.strokeStyle = style; ctx.beginPath(); ctx.arc(cx, cy, R, Math.PI, 2 * Math.PI); ctx.stroke(); };
+      arc(1.2, rgba('170,195,255', 0.22 * glowP));
+      const sp = 0.03 + rimP * 0.6;
+      const lit = (alpha, mid) => {
+        const lg = ctx.createLinearGradient(0, 0, W, 0);
+        lg.addColorStop(0, 'rgba(200,222,255,0)');
+        lg.addColorStop(clamp(0.5 - sp, 0, 0.49), 'rgba(200,222,255,0)');
+        lg.addColorStop(clamp(0.5 - sp * 0.45, 0, 0.495), rgba('190,214,255', alpha * 0.6));
+        lg.addColorStop(0.5, rgba(mid, alpha));
+        lg.addColorStop(clamp(0.5 + sp * 0.45, 0.505, 1), rgba('190,214,255', alpha * 0.6));
+        lg.addColorStop(clamp(0.5 + sp, 0.51, 1), 'rgba(200,222,255,0)');
+        lg.addColorStop(1, 'rgba(200,222,255,0)');
+        return lg;
+      };
+      const ra = (0.3 + 0.7 * rimP) * glowP;
+      ctx.globalCompositeOperation = 'lighter';
+      arc(14, lit(0.07 * ra * br, '150,180,255'));
+      arc(6, lit(0.22 * ra * br, '170,200,255'));
+      arc(2.2, lit(0.85 * ra, '235,244,255'));
+      arc(1, lit(ra, '255,255,255'));
+
+      // a glint runs along the horizon every few seconds
+      if (!reduce && rimP > 0.85) {
+        const u = (t % 7.5) / 2.2;
+        if (u < 1) {
+          for (const side of [-1, 1]) {
+            const x = cx + side * ease(u) * W * 0.56;
+            const dx = x - cx;
+            const y = cy - Math.sqrt(Math.max(0, R * R - dx * dx));
+            const s = 26 * (1 - u * 0.5);
+            g = ctx.createRadialGradient(x, y, 0, x, y, s);
+            g.addColorStop(0, rgba('255,255,255', 0.9 * (1 - u)));
+            g.addColorStop(0.3, rgba('170,200,255', 0.35 * (1 - u)));
+            g.addColorStop(1, 'rgba(150,180,255,0)');
+            ctx.fillStyle = g;
+            ctx.beginPath(); ctx.arc(x, y, s, 0, 6.283); ctx.fill();
+          }
+        }
+      }
+
+      // lens flare: a thin streak through the star and four spikes
+      const fl = sunP * br;
+      if (fl > 0.01) {
+        const half = W * 0.5 * Math.min(1, sunP * (0.8 + flash * 0.4));
+        g = ctx.createLinearGradient(cx - half, 0, cx + half, 0);
+        g.addColorStop(0, 'rgba(120,160,255,0)');
+        g.addColorStop(0.5, rgba('225,236,255', 0.75 * fl));
+        g.addColorStop(1, 'rgba(120,160,255,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(cx - half, sunY - 1, half * 2, 2);
+        const sl = Math.min(room, 46 * fl);
+        g = ctx.createLinearGradient(0, sunY - sl, 0, sunY + sl);
+        g.addColorStop(0, 'rgba(200,220,255,0)');
+        g.addColorStop(0.5, rgba('255,255,255', 0.9 * fl));
+        g.addColorStop(1, 'rgba(200,220,255,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(cx - 0.8, sunY - sl, 1.6, sl * 2);
+        ctx.fillStyle = rgba('255,255,255', Math.min(1, sunP * 1.2));
+        ctx.beginPath(); ctx.arc(cx, sunY, 2.6 + 2.2 * sunP * br, 0, 6.283); ctx.fill();
+      }
+      ctx.globalCompositeOperation = 'source-over';
+    };
+
+    onFrame(now => {
+      if (!on || document.hidden || !W) { last = 0; return; }
+      const target = reduce ? 1 : clamp((S.y + S.vh - top) / (S.vh * 0.85), 0, 1);
+      const moving = Math.abs(target - rise) > 0.001 || flash > 0;
+      if (reduce && !dirty) return;
+      // phones: ~30 fps once the sunrise has settled
+      if (!fine && !moving && !dirty && now - last < 33) return;
+      const dt = last ? Math.min(50, now - last) : 16;
+      last = now;
+      rise += (target - rise) * 0.07;
+      draw(rise, now / 1000, dt);
+      dirty = false;
+    });
+  });
+
   measure();
 })();

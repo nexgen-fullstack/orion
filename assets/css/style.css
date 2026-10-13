@@ -713,21 +713,14 @@ html.sv-open .fab { transform: translateY(160%); }
    ========================================================================== */
 .services {
   position: relative; z-index: 2; isolation: isolate; overflow: hidden; color: var(--ink);
-  padding: clamp(170px, 25vh, 290px) var(--pad) clamp(140px, 20vh, 220px);
+  padding: calc(clamp(150px, 21vh, 230px) + clamp(120px, 15vh, 170px)) var(--pad) clamp(140px, 20vh, 220px);
 }
-.horizon {
-  position: absolute; left: 50%; top: clamp(60px, 9vh, 110px); z-index: -1; pointer-events: none;
-  width: max(260vw, 1800px); aspect-ratio: 1; translate: -50% 0; border-radius: 50%;
-  background: radial-gradient(closest-side, #060818 0%, #070a1d 92%, #0b1236 99%, rgba(11, 18, 54, 0) 100%);
-  box-shadow: 0 -1px 0 rgba(214, 230, 255, .9), 0 -10px 34px rgba(120, 165, 255, .55), 0 -60px 140px rgba(90, 105, 255, .32), 0 -160px 260px rgba(255, 111, 174, .12),
-    inset 0 2px 1px rgba(214, 230, 255, .55), inset 0 26px 70px rgba(80, 130, 255, .28);
-}
-.horizon i { position: absolute; left: 50%; top: -3px; width: min(46%, 900px); height: 6px; translate: -50% 0; border-radius: 50%;
-  background: radial-gradient(closest-side, #fff 0%, rgba(190, 220, 255, .8) 30%, transparent 100%); filter: blur(1.5px);
-  animation: sunrise 7s ease-in-out infinite; }
-.horizon i::after { content: ""; position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; translate: -50% -50%; border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(255, 255, 255, .55), rgba(160, 200, 255, .18) 45%, transparent); }
-@keyframes sunrise { 50% { opacity: .75; width: min(36%, 700px); } }
+/* the sunrise over the planet is drawn on a canvas (main.js, safe('horizon'); the dark planet body below it is plain CSS */
+.services { --rim: clamp(150px, 21vh, 230px); }
+.horizon { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.horizon__planet { position: absolute; left: 50%; top: var(--rim); width: max(260vw, 1800px); aspect-ratio: 1; translate: -50% 0; border-radius: 50%;
+  background: #060818; box-shadow: 0 -1px 0 rgba(190, 210, 255, .3); }
+.horizon__cv { position: absolute; left: 0; top: 0; width: 100%; height: calc(var(--rim) + 300px); }
 .services ::selection { background: #5b4cf0; color: #fff; }
 .services__head { position: relative; max-width: 1320px; margin: 0 auto clamp(44px, 9vh, 110px); display: flex; justify-content: space-between; align-items: flex-end; gap: 24px 48px; flex-wrap: wrap; }
 .services__head p { max-width: 36ch; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.55; color: var(--dim); font-weight: 600; }
@@ -1450,3 +1443,6 @@ html.is-ready .glint { animation: glint 5.6s var(--e) infinite; animation-delay:
   background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, .45) 50%, transparent 65%) -150% 0 / 200% 100% no-repeat; animation: ctaShine 4.5s var(--e2) infinite; }
 @keyframes ctaShine { 55%, 100% { background-position: 250% 0; } }
 @media (prefers-reduced-motion: reduce) { .step--cta::after { display: none; } }
+
+/* the about planets may drift past the bottom of their section (behind the services horizon) instead of being cut by a straight edge */
+.about { overflow: visible; overflow-x: clip; }
