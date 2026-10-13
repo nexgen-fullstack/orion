@@ -26,6 +26,8 @@
   const tilt = { x: 0, y: 0 };
   // the moment the intro ends the star field makes a hyperspace jump
   const jump = { t: 0 };
+  // how far the star over the services horizon has risen (0…1); the Moon is lit by it
+  const sunrise = { p: 0 };
 
   /* ---------- frame loop, scroll state & measuring ---------- */
   const S = { y: window.scrollY, vy: 0, vh: window.innerHeight, vw: window.innerWidth };
@@ -2706,8 +2708,80 @@ void main(){
       const dt = last ? Math.min(50, now - last) : 16;
       last = now;
       rise += (target - rise) * 0.07;
+      sunrise.p = rise;
       draw(rise, now / 1000, dt);
       dirty = false;
+    });
+  });
+
+  /* ---------- the Moon (rendered from NASA's LRO maps by tools/moon_render.py): it hangs between "About" and the
+     services horizon in earthshine, lights up as the star rises, then slowly sets behind the planet ---------- */
+  safe('moon', () => {
+    const box = $('.moon');
+    const sec = $('.services');
+    if (!box || !sec) return;
+    const imgs = $$('img', box);
+    let left = imgs.length;
+    const loaded = () => { if (--left <= 0) box.classList.add('is-made'); };
+    imgs.forEach(im => { if (im.complete && im.naturalWidth) loaded(); else { im.addEventListener('load', loaded); im.addEventListener('error', loaded); } });
+    let vis = false;
+    let sTop = 0;
+    onMeasure(() => { sTop = docTop(sec); });
+    new IntersectionObserver(([e]) => { vis = e.isIntersecting; }, { rootMargin: '30% 0px' }).observe(box);
+    let lastLit = -1;
+    onFrame(() => {
+      if (!vis) return;
+      // stays put until the services horizon reaches the lower part of the screen, then sinks behind the planet
+      const d = (sTop - S.y) - 0.62 * S.vh;
+      const ty = reduce || d > 0 ? 0 : -d * 0.5;
+      box.style.transform = 'translate3d(' + (reduce ? 0 : -tilt.x * 12).toFixed(1) + 'px,' + ty.toFixed(1) + 'px,0)';
+      const lt = reduce ? 1 : clamp((sunrise.p - 0.1) / 0.55, 0, 1);
+      if (Math.abs(lt - lastLit) > 0.004) { box.style.setProperty('--lit', lt.toFixed(3)); lastLit = lt; }
+    });
+  });
+
+  /* ---------- services rows: each has its own colour; when a row comes into view a beam of light sweeps it,
+     a comet runs along its line and the number flares; the row nearest the middle of the screen glows ---------- */
+  safe('svcfx', () => {
+    const items = $$('.svc__item');
+    if (!items.length || reduce) return;
+    const sweep = el => {
+      el.classList.remove('is-sweep');
+      void el.offsetWidth;
+      el.classList.add('is-sweep');
+      clearTimeout(el._sw);
+      el._sw = setTimeout(() => el.classList.remove('is-sweep'), 1900);
+    };
+    let queue = 0;
+    const seen = new Map();
+    const io3 = new IntersectionObserver(es => es.forEach(e => {
+      const full = e.intersectionRatio >= 0.6;
+      if (full && !seen.get(e.target)) {
+        const now = performance.now();
+        const at = Math.max(now, queue + 260);
+        queue = at;
+        setTimeout(() => sweep(e.target), at - now);
+      }
+      seen.set(e.target, full);
+    }), { threshold: [0, 0.6] });
+    items.forEach(el => io3.observe(el));
+    const svc = $('.svc');
+    let near = null;
+    onFrame(() => {
+      const r0 = svc.getBoundingClientRect();
+      if (r0.bottom < 0 || r0.top > S.vh) { if (near) { near.classList.remove('is-near'); near = null; } return; }
+      let best = null;
+      let bd = S.vh * 0.32;
+      items.forEach(el => {
+        const r = el.getBoundingClientRect();
+        const dd = Math.abs(r.top + r.height / 2 - S.vh * 0.5);
+        if (dd < bd) { bd = dd; best = el; }
+      });
+      if (best !== near) {
+        if (near) near.classList.remove('is-near');
+        if (best) best.classList.add('is-near');
+        near = best;
+      }
     });
   });
 

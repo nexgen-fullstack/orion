@@ -1446,3 +1446,37 @@ html.is-ready .glint { animation: glint 5.6s var(--e) infinite; animation-delay:
 
 /* the about planets may drift past the bottom of their section (behind the services horizon) instead of being cut by a straight edge */
 .about { overflow: visible; overflow-x: clip; }
+
+/* ---------- the Moon over the services horizon ---------- */
+.moon { --lit: 0; position: absolute; z-index: -1; right: clamp(14px, 9vw, 170px); bottom: clamp(10px, 3vh, 40px); width: clamp(112px, 13vw, 200px); aspect-ratio: 1; pointer-events: none; will-change: transform; }
+.moon__in { position: absolute; inset: 0; animation: moonFloat 10s ease-in-out infinite; }
+.moon__in::before { content: ""; position: absolute; inset: -42%; border-radius: 50%; opacity: var(--lit);
+  background: radial-gradient(closest-side, rgba(175, 200, 255, .26), rgba(120, 140, 255, .09) 52%, transparent); }
+.moon img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s var(--e); }
+.moon.is-made .moon__dark { opacity: 1; }
+.moon.is-made .moon__lit { opacity: var(--lit); transition: none; filter: drop-shadow(0 0 16px rgba(170, 200, 255, .32)); }
+@keyframes moonFloat { 50% { transform: translateY(-9px) rotate(1.5deg); } }
+
+/* ---------- services rows: a colour each, a sweep of light as they arrive, the middle one glows ---------- */
+.svc__fx { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.svc__fx::before { content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity .9s var(--e);
+  background: radial-gradient(55% 130% at 10% 50%, color-mix(in srgb, var(--h) 42%, transparent), transparent 72%), linear-gradient(90deg, color-mix(in srgb, var(--h) 12%, transparent), transparent 70%); }
+.svc__fx::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 42%; transform: translateX(-130%);
+  background: linear-gradient(100deg, transparent 0%, color-mix(in srgb, var(--h) 30%, transparent) 38%, rgba(255, 255, 255, .16) 50%, color-mix(in srgb, var(--h) 30%, transparent) 62%, transparent 100%); }
+.svc__comet { position: absolute; left: 0; bottom: -1px; z-index: 2; width: 150px; height: 2px; pointer-events: none; opacity: 0; transform: translateX(-160px);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--h) 80%, #fff) 70%, #fff); border-radius: 2px; filter: drop-shadow(0 0 6px var(--h)); }
+.svc__comet::after { content: ""; position: absolute; right: -5px; top: 50%; width: 10px; height: 10px; translate: 0 -50%; border-radius: 50%; background: #fff; box-shadow: 0 0 12px 4px var(--h); }
+.svc__item { container-type: inline-size; }
+.svc__item.is-sweep .svc__fx::after { animation: svcSweep 1.7s var(--e2); }
+.svc__item.is-sweep .svc__comet { animation: svcComet 1.6s var(--e2); }
+.svc__item.is-sweep .svc__num { animation: numFlare 1.7s var(--e); }
+.svc__item.is-sweep .svc__arrow { animation: arrowPing 1.4s var(--e) .5s; }
+@keyframes svcSweep { to { transform: translateX(360%); } }
+@keyframes svcComet { 0% { opacity: 0; transform: translateX(-160px); } 12% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; transform: translateX(calc(100cqw + 20px)); } }
+@keyframes numFlare { 35% { -webkit-text-stroke-color: #fff; text-shadow: 0 0 28px var(--h), 0 0 6px #fff; } }
+@keyframes arrowPing { 40% { transform: scale(1.18); border-color: var(--h); box-shadow: 0 0 26px var(--h); } }
+.svc__item.is-near:not(.is-on) .svc__fx::before { opacity: 1; }
+.svc__item.is-near:not(.is-on) .svc__num { color: color-mix(in srgb, var(--h) 22%, transparent); -webkit-text-stroke-color: color-mix(in srgb, var(--h) 75%, #fff); text-shadow: 0 0 34px color-mix(in srgb, var(--h) 65%, transparent); }
+.svc__item.is-near:not(.is-on) .svc__arrow { border-color: color-mix(in srgb, var(--h) 70%, #fff); box-shadow: 0 0 22px -4px var(--h); }
+.svc__num { transition: color .8s var(--e), -webkit-text-stroke-color .8s var(--e), text-shadow .8s var(--e); }
+@media (prefers-reduced-motion: reduce) { .svc__comet, .svc__fx::after { display: none; } }
