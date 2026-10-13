@@ -1409,10 +1409,20 @@ html.is-ready .glint { animation: glint 5.6s var(--e) infinite; animation-delay:
 /* ---------- the planet comes forward: the name stays behind it ---------- */
 .hero__back { position: absolute; z-index: 1; pointer-events: none; display: flex; }
 .hero__back .hero__giant { visibility: visible; }
-.hero__title .hero__giant { transition: opacity 2s var(--e2) .2s; }
-.hero.is-emerge .hero__title .hero__giant { opacity: 0; }
+/* the copy behind the planet appears only once the front letters have finished rising, so the two never drift apart */
+.hero__back:not(.is-on) .hero__giant { opacity: 0; }
+/* the front name dissolves backwards while the planet pushes through it */
+.hero__title .hero__giant { transition: opacity 1.5s var(--e2) .15s, filter 1.5s var(--e2) .15s, transform 1.8s var(--e2) .15s; transform-origin: 50% 60%; }
+.hero.is-emerge .hero__title .hero__giant { opacity: 0; filter: blur(6px); transform: scale(.96); }
+.hero__back .hero__giant { transition: opacity 1.6s var(--e2) .3s; }
 .hero.is-emerge .hero__globe::before { animation: glow 6s ease-in-out 2.2s infinite, flare 2.2s var(--e2); }
-@keyframes flare { 45% { transform: scale(1.4); opacity: 1; } }
+@keyframes flare { 45% { transform: scale(1.45); opacity: 1; } }
+/* the atmosphere flashes and a ring of light rolls outward as the planet comes forward */
+.hero__globe::after { content: ""; position: absolute; inset: 17%; border-radius: 50%; pointer-events: none; opacity: 0;
+  border: 2px solid rgba(170, 210, 255, .9); box-shadow: 0 0 40px rgba(110, 160, 255, .8), inset 0 0 40px rgba(110, 160, 255, .5); }
+@media (max-width: 760px) { .hero__globe::after { inset: 13%; } }
+.hero.is-emerge .hero__globe::after { animation: ringOut 2s var(--e) .35s; }
+@keyframes ringOut { 0% { opacity: 0; transform: scale(.98); } 15% { opacity: 1; } 100% { opacity: 0; transform: scale(1.55); } }
 
 /* ---------- "How it works": a patch of sky in every card, bursts of light as cards arrive ---------- */
 .step:not(.step--cta) {

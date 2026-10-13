@@ -418,9 +418,9 @@
     // the Orion constellation behind the hero: draws itself after the intro, floats with pointer / phone tilt and scroll
     const sky = $('.hero__sky');
     const skySvg = sky && $('.ori', sky);
-    onReady(() => setTimeout(() => { giant.classList.add('is-lit'); if (backGiant()) backGiant().classList.add('is-lit'); }, 2300));
+    onReady(() => setTimeout(() => { giant.classList.add('is-lit'); back.classList.add('is-on'); if (backGiant()) backGiant().classList.add('is-lit'); }, 2300));
     // a few seconds after the name appears, the planet comes forward through it
-    if (!reduce) onReady(() => setTimeout(() => hero.classList.add('is-emerge'), 3200));
+    if (!reduce) onReady(() => setTimeout(() => hero.classList.add('is-emerge'), 2900));
     if (skySvg) {
       onReady(() => { skySvg.style.setProperty('--d0', '.35s'); skySvg.classList.add('is-draw'); });
       if (!reduce) {
@@ -535,7 +535,7 @@ void main(){
     vec3 L=normalize(vec3(-.5,.55,.68));
     float lam=clamp(dot(pf,L),0.,1.);
     float fr=pow(1.-z,2.);
-    float a=.46+.3*fr;
+    float a=.54+.3*fr;
     vec3 col=mix(vec3(.012,.02,.075),vec3(.04,.075,.21),lam)*a;
     col+=vec3(.6,.74,1.)*grid(gf,aa)*.07*(1.-df.x);
     col+=V*db.x*.17*uLandA;
@@ -1023,7 +1023,7 @@ void main(){
       hov += (hovT - hov) * 0.08;
       zoom += (zoomT - zoom) * 0.22;
       if (!emergeT && hero.classList.contains('is-emerge')) emergeT = now;
-      if (emergeT) { const u = clamp((now - emergeT) / 2200, 0, 1); ek = 1 + 0.1 * (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2); }
+      if (emergeT) { const u = clamp((now - emergeT) / 2000, 0, 1); ek = 1 + 0.14 * (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2); }
       const busy = drag || hovT > 0.5;
       if (!drag) {
         dYaw += vYaw; vYaw *= 0.94;
