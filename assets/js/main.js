@@ -36,6 +36,7 @@
   const layouts = [];
   const measures = [];
   const onFrame = fn => frames.push(fn);
+  let preFrame = null; // runs before the scroll position is read (auto-scroll moves the page here)
   const onLayout = fn => { layouts.push(fn); fn(); };
   const onMeasure = fn => { measures.push(fn); fn(); };
   const docTop = el => el.getBoundingClientRect().top + window.scrollY;
@@ -52,6 +53,7 @@
 
   const loop = now => {
     if (lenis) lenis.raf(now);
+    if (preFrame) preFrame(now);
     const y = window.scrollY;
     S.vy = y - S.y; S.y = y;
     for (let i = 0; i < frames.length; i++) frames[i](now);
@@ -420,6 +422,11 @@
     };
     onMeasure(heroSpot);
     let fr = 0;
+    // page height cached (reading it every frame forces a layout and makes the glide stutter)
+    let docMax = document.documentElement.scrollHeight;
+    const remax = () => { docMax = document.documentElement.scrollHeight; };
+    onMeasure(remax);
+    if (window.ResizeObserver) new ResizeObserver(remax).observe(document.body);
     paint();
 
     let lift = -1;
@@ -436,15 +443,19 @@
         if (!show) box.classList.remove('is-tip');
       }
       const fabOn = fab.classList.contains('is-on');
-      if (!fabOn && ++fr % 30 === 0) heroSpot();
+      if (!fabOn && fr < 900 && ++fr % 30 === 0) heroSpot(); // only while the hero settles
       const l = !fabOn && heroBottom && S.y < S.vh * 0.25 ? heroBottom : 0;
-      if (l !== lift) { lift = l; box.style.bottom = l ? 'calc(' + l + 'px + env(safe-area-inset-bottom))' : ''; }
+      if (l !== lift) { lift = l; box.style.translate = l ? '0 ' + (88 - l) + 'px' : ''; } // moved by transform, not layout
+    });
+    // the glide itself runs at the very start of each frame, before anything reads or writes the page,
+    // so the browser never has to recalculate layout just to scroll, and every effect sees the new position
+    preFrame = now => {
       if (!on) return;
       const dt = last ? Math.min(0.25, (now - last) / 1000) : 0;
       last = now;
       const y = window.scrollY;
       if (set >= 0 && Math.abs(y - set) > 2) acc = y; // the page moved under us (layout shift) — continue from there
-      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const max = docMax - S.vh;
       acc = Math.min(max, acc + PX * speed * dt);
       set = acc; // fractional on purpose: phones scroll in device pixels, so slow speeds stay smooth
       if (Math.abs(set - y) >= 0.25) {
@@ -452,7 +463,7 @@
         else window.scrollTo({ top: set, behavior: 'instant' });
       }
       if (acc >= max - 1) { stop(); paint(); }
-    });
+    };
   });
 
   /* ---------- clocks (Madeira time) ---------- */
@@ -460,18 +471,38 @@
     const fmt = new Intl.DateTimeFormat(T.locale || 'en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' });
     const parts = new Intl.DateTimeFormat('en-GB', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false, timeZone: 'Atlantic/Madeira' });
     const digital = $$('[data-clock]');
-    const hands = $('.place__clock');
+    // analog clocks: ticks drawn once, hands sweep with CSS animations synced to Madeira time (no per-second repaint)
+    const clocks = $$('.oclock');
+    let ticks = '';
+    for (let i = 0; i < 60; i++) {
+      const big = i % 5 === 0;
+      ticks += '<line x1="50" y1="' + (big ? 5.5 : 6) + '" x2="50" y2="' + (big ? 13 : 9) + '" transform="rotate(' + i * 6 + ' 50 50)"' + (big ? ' class="b"' : '') + '/>';
+    }
+    clocks.forEach(c => c.insertAdjacentHTML('afterbegin', '<svg viewBox="0 0 100 100">' + ticks + '</svg>'));
+    const sync = () => {
+      const p = {};
+      parts.formatToParts(new Date()).forEach(x => { p[x.type] = +x.value; });
+      const sec = (p.hour % 12) * 3600 + p.minute * 60 + p.second + new Date().getMilliseconds() / 1000;
+      clocks.forEach(c => {
+        if (reduce) {
+          // reduced motion: no sweeping, the hands step once a second
+          $('.hh', c).style.transform = 'rotate(' + (sec / 120) + 'deg)';
+          $('.mm', c).style.transform = 'rotate(' + ((sec % 3600) / 10) + 'deg)';
+          $('.ss', c).style.transform = 'rotate(' + (Math.floor(sec % 60) * 6) + 'deg)';
+          return;
+        }
+        $('.hh', c).style.animationDelay = -sec + 's';
+        $('.mm', c).style.animationDelay = -(sec % 3600) + 's';
+        $('.ss', c).style.animationDelay = -(sec % 60) + 's';
+        c.classList.add('is-on');
+      });
+    };
+    sync();
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) sync(); });
     const tick = () => {
       const now = new Date();
       digital.forEach(el => { el.textContent = fmt.format(now); });
-      if (hands) {
-        const p = {};
-        parts.formatToParts(now).forEach(x => { p[x.type] = +x.value; });
-        const h = (p.hour % 12) + p.minute / 60;
-        $('.hh', hands).style.transform = 'rotate(' + (h * 30) + 'deg)';
-        $('.mm', hands).style.transform = 'rotate(' + (p.minute * 6 + p.second * 0.1) + 'deg)';
-        $('.ss', hands).style.transform = 'rotate(' + (p.second * 6) + 'deg)';
-      }
+      if (reduce) sync();
     };
     tick();
     setInterval(tick, 1000);
@@ -574,6 +605,17 @@
     const rot = $('.rotator__word');
     const words = T.rot || [];
     if (rot && words.length > 1 && !reduce) {
+      // a longer word can wrap the sentence onto one more line; reserve the tallest version
+      // so the buttons under it never jump when the word changes
+      const lead = rot.closest('.hero__lead');
+      if (lead) onMeasure(() => {
+        const cur = rot.textContent;
+        lead.style.minHeight = '';
+        let mx = 0;
+        words.forEach(w => { rot.textContent = w; mx = Math.max(mx, lead.offsetHeight); });
+        rot.textContent = cur;
+        lead.style.minHeight = mx + 'px';
+      });
       let k = 0;
       setInterval(() => {
         if (document.hidden || S.y > S.vh) return;
@@ -1773,10 +1815,11 @@ void main(){
     const sec = $('.about');
     if (shapes.length && sec && !reduce && !SDA) {
       let top = 0;
-      onMeasure(() => { top = docTop(sec); });
+      let h = 0;
+      onMeasure(() => { top = docTop(sec); h = sec.offsetHeight; });
       onFrame(() => {
         const rel = S.y + S.vh - top;
-        if (rel < -200 || rel > sec.offsetHeight + S.vh * 2) return;
+        if (rel < -200 || rel > h + S.vh * 2) return;
         shapes.forEach(s => {
           const d = +s.dataset.depth;
           s.style.translate = '0 ' + (rel * d * -0.35).toFixed(1) + 'px';
@@ -2914,14 +2957,23 @@ void main(){
     items.forEach(el => io3.observe(el));
     const svc = $('.svc');
     let near = null;
+    // positions are measured once (and when the list changes size), never inside the frame loop:
+    // reading layout every frame forced the phone to recalculate the page and made scrolling stutter
+    let top = 0;
+    let bot = 0;
+    let mids = [];
+    const meas = () => {
+      top = docTop(svc); bot = top + svc.offsetHeight;
+      mids = items.map(el => docTop(el) + el.offsetHeight / 2);
+    };
+    onMeasure(meas);
+    if (window.ResizeObserver) new ResizeObserver(() => meas()).observe(svc);
     onFrame(() => {
-      const r0 = svc.getBoundingClientRect();
-      if (r0.bottom < 0 || r0.top > S.vh) { if (near) { near.classList.remove('is-near'); near = null; } return; }
+      if (bot - S.y < 0 || top - S.y > S.vh) { if (near) { near.classList.remove('is-near'); near = null; } return; }
       let best = null;
       let bd = S.vh * 0.32;
-      items.forEach(el => {
-        const r = el.getBoundingClientRect();
-        const dd = Math.abs(r.top + r.height / 2 - S.vh * 0.5);
+      items.forEach((el, i) => {
+        const dd = Math.abs(mids[i] - S.y - S.vh * 0.5);
         if (dd < bd) { bd = dd; best = el; }
       });
       if (best !== near) {
