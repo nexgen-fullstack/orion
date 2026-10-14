@@ -479,7 +479,7 @@ html:not(.js) .reel { display: none; }
   transition: transform .6s var(--e);
 }
 @media (hover: hover) { .reel .site:hover { transform: translateY(-6px) scale(1.02); } }
-@media (max-width: 760px) { .site { --fs: 6.4px; } .reel__row, .reel__rows { gap: 10px; } }
+@media (max-width: 760px) { .site { --fs: 7.4px; } .reel__row, .reel__rows { gap: 12px; } .reel { padding-top: 112px; } }
 .ts-bar { height: 2.6em; flex: none; display: flex; align-items: center; gap: .5em; padding: 0 1.2em; background: color-mix(in srgb, var(--fg) 9%, var(--bg)); }
 .ts-bar i { width: .75em; height: .75em; border-radius: 50%; background: color-mix(in srgb, var(--fg) 35%, transparent); }
 .ts-bar span { margin-left: 1em; flex: 1; max-width: 22em; height: 1.6em; border-radius: .8em; background: color-mix(in srgb, var(--fg) 10%, transparent); font: 600 .9em/1.8em var(--fm); padding-left: 1em; opacity: .8; overflow: hidden; white-space: nowrap; }
@@ -1379,7 +1379,10 @@ html.is-ready .glint { animation: glint 5.6s var(--e) infinite; animation-delay:
 .btn--grad, .fab { text-shadow: 0 1px 8px rgba(0, 0, 20, .35); }
 
 /* ---------- footer: the constellation over the giant name ---------- */
-.footer { background: linear-gradient(180deg, rgba(4, 5, 12, 0) 0%, rgba(2, 3, 9, .9) 60%); }
+/* the footer is open sky too; only a soft shade sits right behind the giant name */
+.footer { background: none; border-top: 0; }
+.footer__giant::before { content: ""; position: absolute; inset: -30% -10% -40%; z-index: 0; pointer-events: none;
+  background: radial-gradient(60% 55% at 50% 62%, rgba(2, 3, 9, .62), rgba(2, 3, 9, .3) 55%, transparent 80%); }
 .footer__giant { position: relative; }
 .footer__sky { position: absolute; left: 50%; top: 52%; translate: -50% -50%; height: 165%; pointer-events: none; opacity: .5; }
 .footer__sky .ori { height: 100%; width: auto; }
@@ -1480,3 +1483,28 @@ html.is-ready .glint { animation: glint 5.6s var(--e) infinite; animation-delay:
 .svc__item.is-near:not(.is-on) .svc__arrow { border-color: color-mix(in srgb, var(--h) 70%, #fff); box-shadow: 0 0 22px -4px var(--h); }
 .svc__num { transition: color .8s var(--e), -webkit-text-stroke-color .8s var(--e), text-shadow .8s var(--e); }
 @media (prefers-reduced-motion: reduce) { .svc__comet, .svc__fx::after { display: none; } }
+
+/* ---------- scroll-linked motion on the compositor: it follows the finger exactly, no lag, no jitter ---------- */
+html.js .hero__globe { touch-action: pan-y; }
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__title, .hero__back { animation: sdTitle linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+    .hero__bottom { animation: sdBottom linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+    .hero__globe { animation: sdGlobe linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+    .hero__sky { animation: sdSky linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+    .moon { animation: sdMoon linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
+    .shape { animation: sdShape linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
+  }
+}
+@keyframes sdTitle { to { transform: translate3d(0, 42vh, 0); opacity: -.1; } }
+@keyframes sdBottom { to { opacity: -.6; } }
+@keyframes sdGlobe { to { transform: translate3d(0, 22vh, 0) scale(1.35); } }
+@keyframes sdSky { to { transform: translate3d(0, 16vh, 0); } }
+@keyframes sdMoon { 0%, 48% { transform: none; } 100% { transform: translate3d(0, 30vh, 0); } }
+@keyframes sdShape { from { translate: 0 calc(var(--dz, 0) * 1px); } to { translate: 0 calc(var(--dz, 0) * -1px); } }
+.shape--sphere { --dz: 120; } .shape--ring { --dz: -100; } .shape--cube { --dz: 150; }
+
+/* the contact glow fades out before the section ends: no lighter band with a hard edge above the footer */
+.contact__glow { -webkit-mask-image: linear-gradient(180deg, #000 45%, transparent 88%); mask-image: linear-gradient(180deg, #000 45%, transparent 88%); }
+/* sections receive focus after an anchor jump (for screen readers) — no outline drawn around a whole section */
+main section[tabindex="-1"]:focus, main section[tabindex="-1"]:focus-visible, #brief[tabindex="-1"]:focus-visible { outline: none; }

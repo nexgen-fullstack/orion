@@ -12,6 +12,7 @@
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const SDA = !reduce && !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: scroll()'));
   let T = {};
   try { T = JSON.parse(($('#i18n') || {}).textContent || '{}'); } catch (e) { /* keep defaults */ }
 
@@ -257,23 +258,29 @@
       const target = id === '#top' ? doc : document.querySelector(id);
       if (!target) return;
       e.preventDefault();
-      if (menuOpen) setMenu(false);
-      // sections marked data-anchor="center" land in the middle of the screen (the concept reel)
-      let dest = id === '#top' ? 0 : target;
-      if (target !== doc && target.dataset.anchor === 'center') {
-        const a0 = target.firstElementChild;
-        const a1 = target.lastElementChild;
-        const top = docTop(a0);
-        const h = docTop(a1) + a1.offsetHeight - top;
-        dest = Math.max(0, Math.round(top - Math.max(S.vw <= 760 ? 76 : 96, (S.vh - h) / 2)));
-      } else if (target !== doc && target.dataset.anchor === 'bottom') {
-        // the brief: make sure the messenger buttons at its end are on screen
-        const top = docTop(target);
-        dest = Math.max(0, Math.round(Math.max(top - 90, top + target.offsetHeight - S.vh + 24)));
-      }
-      if (lenis) lenis.scrollTo(dest, { duration: 1.5 });
-      else if (typeof dest === 'number') window.scrollTo({ top: dest, behavior: reduce ? 'auto' : 'smooth' });
-      else target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+      const go = () => {
+        let dest = 0;
+        if (target !== doc) {
+          const top = docTop(target);
+          dest = top;
+          if (target.dataset.anchor === 'center') {
+            // the concept reel lands centred, but never so high that the hero globe peeks in above it
+            const a0 = target.firstElementChild;
+            const a1 = target.lastElementChild;
+            const c0 = docTop(a0);
+            const h = docTop(a1) + a1.offsetHeight - c0;
+            dest = Math.max(top, Math.round(c0 - Math.max(S.vw <= 760 ? 76 : 96, (S.vh - h) / 2)));
+          } else if (target.dataset.anchor === 'bottom') {
+            // the brief: make sure the messenger buttons at its end are on screen
+            dest = Math.round(Math.max(top - 90, top + target.offsetHeight - S.vh + 24));
+          }
+        }
+        dest = Math.max(0, Math.round(dest));
+        if (lenis) lenis.scrollTo(dest, { duration: 1.5 });
+        else window.scrollTo({ top: dest, behavior: reduce ? 'auto' : 'smooth' });
+      };
+      // from the mobile menu: close it and unlock the page first, then scroll (phones ignore a scroll on a still-locked page)
+      if (menuOpen) { setMenu(false); requestAnimationFrame(() => requestAnimationFrame(go)); } else go();
       if (target !== doc) {
         if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
         target.focus({ preventScroll: true });
@@ -300,7 +307,7 @@
     onFrame(() => {
       const y = S.y;
       nav.classList.toggle('is-scrolled', y > 24);
-      if (Math.abs(y - lastY) > 8) {
+      if (Math.abs(y - lastY) > 24) {
         nav.classList.toggle('is-hidden', !menuOpen && y > lastY && y > S.vh * 0.7);
         lastY = y;
       }
@@ -432,7 +439,8 @@
           if (S.y > S.vh * 1.3) return;
           sx += (tilt.x - sx) * 0.045;
           sy += (tilt.y - sy) * 0.045;
-          sky.style.transform = 'translate3d(' + (-sx * 34).toFixed(1) + 'px,' + (-sy * 22 + S.y * 0.16).toFixed(1) + 'px,0)';
+          skySvg.style.transform = 'translate3d(' + (-sx * 34).toFixed(1) + 'px,' + (-sy * 22).toFixed(1) + 'px,0)';
+          if (!SDA) sky.style.transform = 'translate3d(0,' + (S.y * 0.16).toFixed(1) + 'px,0)';
         });
       }
     }
@@ -456,8 +464,8 @@
       }, 2700);
     }
 
-    // scroll parallax for hero layers
-    if (!reduce) {
+    // scroll parallax for hero layers (only when CSS scroll-driven animations are not available)
+    if (!reduce && !SDA) {
       onFrame(() => {
         if (S.y > S.vh * 1.3) return;
         const p = clamp(S.y / S.vh, 0, 1);
@@ -656,7 +664,7 @@ void main(){
       return { name: c[0].toUpperCase(), tag: c[3] || '', prio: c[5] || 0, b, pts, dur: 1500 + om * 1500, on: false };
     });
 
-    let q = Math.min(window.devicePixelRatio || 1, fine ? 1.5 : 1.25);
+    let q = Math.min(window.devicePixelRatio || 1, fine ? 2 : 1.75);
     const fq = Math.min(window.devicePixelRatio || 1, 2);
     let size = 0;
     let rad = 0.66;
@@ -764,12 +772,13 @@ void main(){
         if (!tg) {
           const v = view();
           if (Math.hypot(p[0][0] - v.x, p[0][1] - v.y) > v.r * 1.06) return;
-          tg = {};
+          tg = { mode: p.length > 1 ? 'spin' : '', s: p[0] };
           const now = performance.now();
           if (p.length === 1 && now - lastTap < 320) { zoomT = 1; dPitch = 0; }
           lastTap = now;
         }
-        e.preventDefault();
+        if (p.length > 1) tg.mode = 'spin';
+        if (tg.mode === 'spin') e.preventDefault();
         tg.p = p;
         if (p.length > 1) { tg.d0 = gap(p); tg.z0 = zoomT; }
         vYaw = vPitch = 0;
@@ -777,8 +786,15 @@ void main(){
       }, { passive: false });
       wrap.addEventListener('touchmove', e => {
         if (!tg) return;
-        e.preventDefault();
         const p = pts(e);
+        if (!tg.mode) {
+          const dx = p[0][0] - tg.s[0];
+          const dy = p[0][1] - tg.s[1];
+          if (Math.abs(dx) < 7 && Math.abs(dy) < 7) return;
+          if (Math.abs(dy) >= Math.abs(dx)) { tg = null; hovT = 0; return; }  // vertical: let the page scroll
+          tg.mode = 'spin';
+        }
+        e.preventDefault();
         if (p.length > 1 && tg.p.length > 1) {
           zoomT = clamp(tg.z0 * gap(p) / (tg.d0 || 1), 0.75, 3.2);
           const mx = (p[0][0] + p[1][0] - tg.p[0][0] - tg.p[1][0]) / 2;
@@ -1014,7 +1030,7 @@ void main(){
       if (last && now - t0 > 2000) {
         acc += now - last; n++;
         if (n === 40) {
-          if (acc / n > 26 && q > 0.55) { q *= 0.78; resize(); }
+          if (acc / n > 26 && q > 1.05) { q = Math.max(1, q * 0.85); resize(); }
           acc = 0; n = 0;
         }
       }
@@ -1025,7 +1041,13 @@ void main(){
       hov += (hovT - hov) * 0.08;
       zoom += (zoomT - zoom) * 0.22;
       if (!emergeT && hero.classList.contains('is-emerge')) emergeT = now;
-      if (emergeT) { const u = clamp((now - emergeT) / 2000, 0, 1); ek = 1 + 0.14 * (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2); }
+      if (emergeT) {
+        const io = x => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+        const u = clamp((now - emergeT) / 2000, 0, 1);
+        const u2 = clamp((now - emergeT - 2100) / 1600, 0, 1);
+        const settle = S.vw <= 760 ? 0.9 : 1;
+        ek = u2 > 0 ? 1.14 + (settle - 1.14) * io(u2) : 1 + 0.14 * io(u);
+      }
       const busy = drag || hovT > 0.5;
       if (!drag) {
         dYaw += vYaw; vYaw *= 0.94;
@@ -1429,7 +1451,7 @@ void main(){
       const off = (S.y - top + S.vh) * 0.3 + drift;
       const x0 = -setW[0] + mod(off, setW[0] || 1);
       const x1 = -mod(off, setW[1] || 1);
-      const sk = reduce ? '' : ' skewX(' + skew.toFixed(2) + 'deg)';
+      const sk = reduce || !fine ? '' : ' skewX(' + skew.toFixed(2) + 'deg)';
       rows[0].style.transform = 'translate3d(' + x0.toFixed(1) + 'px,0,0)' + sk;
       rows[1].style.transform = 'translate3d(' + x1.toFixed(1) + 'px,0,0)' + sk;
     });
@@ -1624,7 +1646,7 @@ void main(){
     // floating shapes parallax
     const shapes = $$('.shape[data-depth]');
     const sec = $('.about');
-    if (shapes.length && sec && !reduce) {
+    if (shapes.length && sec && !reduce && !SDA) {
       let top = 0;
       onMeasure(() => { top = docTop(sec); });
       onFrame(() => {
@@ -2136,7 +2158,7 @@ void main(){
       ctx.clearRect(0, 0, W, H);
       ctx.globalCompositeOperation = 'lighter';
 
-      const streak = Math.abs(warp) > 0.06;
+      const streak = fine && Math.abs(warp) > 0.06;
       const ju = jump.t ? (now - jump.t) / 1300 : 2;
       const jb = ju < 1 ? Math.sin(Math.PI * Math.pow(ju, 0.7)) : 0;
       const cx = W / 2;
@@ -2734,7 +2756,7 @@ void main(){
       // stays put until the services horizon reaches the lower part of the screen, then sinks behind the planet
       const d = (sTop - S.y) - 0.62 * S.vh;
       const ty = reduce || d > 0 ? 0 : -d * 0.5;
-      box.style.transform = 'translate3d(' + (reduce ? 0 : -tilt.x * 12).toFixed(1) + 'px,' + ty.toFixed(1) + 'px,0)';
+      if (!SDA) box.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0)';
       const lt = reduce ? 1 : clamp((sunrise.p - 0.1) / 0.55, 0, 1);
       if (Math.abs(lt - lastLit) > 0.004) { box.style.setProperty('--lit', lt.toFixed(3)); lastLit = lt; }
     });
@@ -2782,6 +2804,14 @@ void main(){
         if (best) best.classList.add('is-near');
         near = best;
       }
+    });
+  });
+
+  /* ---------- offline cache: repeat visits load styles, scripts, fonts and images straight from the phone ---------- */
+  safe('sw', () => {
+    if (!('serviceWorker' in navigator) || !window.isSecureContext) return;
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register(new URL('../sw.js', ASSETS).href).catch(() => {});
     });
   });
 
