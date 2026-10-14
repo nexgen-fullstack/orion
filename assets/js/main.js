@@ -330,29 +330,29 @@
     });
   });
 
-  /* ---------- auto-scroll: round button above the contact FAB, the page glides down by itself ---------- */
+  /* ---------- auto-scroll: round button on the right (above the hero CTA, later above the FAB); the page glides down by itself ---------- */
   safe('autoscroll', () => {
     const fab = $('.fab');
     if (!fab) return;
+    const heroCta = $('.hero__cta');
     const SPEEDS = [0.5, 1, 1.5, 2, 3];
     const PX = 55; // px per second at 1×
     const num = new Intl.NumberFormat(T.locale || 'en-GB', { maximumFractionDigits: 1 });
     let speed = 1;
     try { const v = parseFloat(localStorage.getItem('or-autoscroll')); if (SPEEDS.includes(v)) speed = v; } catch (e) { /* private mode */ }
-    const ICO_GO = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l6 6 6-6M6 12l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    const ICO_STOP = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5.5" width="3.6" height="13" rx="1.2" fill="currentColor"/><rect x="13.9" y="5.5" width="3.6" height="13" rx="1.2" fill="currentColor"/></svg>';
+    const ICO = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l6 6 6-6M6 12l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     const box = document.createElement('div');
     box.className = 'asc';
     box.innerHTML = '<div class="asc__speeds" role="group" aria-label="' + (T.as_speed || 'Speed') + '">' +
       SPEEDS.map(v => '<button type="button" data-v="' + v + '">' + num.format(v) + '×</button>').join('') + '</div>' +
-      '<button class="asc__btn" type="button" aria-pressed="false"><span class="asc__ico"></span><b class="asc__x"></b>' +
+      '<button class="asc__btn" type="button" aria-expanded="false"><span class="asc__ico">' + ICO + '</span><b class="asc__x"></b>' +
       '<span class="asc__tip" aria-hidden="true">' + (T.as_on || 'Auto-scroll') + '</span></button>';
     fab.after(box);
     const btn = $('.asc__btn', box);
-    const ico = $('.asc__ico', box);
     const badge = $('.asc__x', box);
     const pills = $$('.asc__speeds button', box);
     let on = false;
+    let open = false;
     let acc = 0;
     let set = -1;
     let last = 0;
@@ -360,19 +360,19 @@
     let shown = false;
     let tipT = 0;
     let tipDone = false;
+    let heroBottom = 0;
 
     const paint = () => {
       box.classList.toggle('is-play', on);
-      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      btn.setAttribute('aria-label', (on ? T.as_off || 'Stop' : T.as_on || 'Auto-scroll') + ' · ' + num.format(speed) + '×');
-      ico.innerHTML = on ? ICO_STOP : ICO_GO;
+      box.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', (T.as_on || 'Auto-scroll') + (on ? ' · ' + num.format(speed) + '×' : ''));
       badge.textContent = num.format(speed) + '×';
-      pills.forEach(p => p.classList.toggle('is-on', +p.dataset.v === speed));
+      pills.forEach(p => p.classList.toggle('is-on', on && +p.dataset.v === speed));
     };
     const stop = () => {
       if (!on) return;
       on = false;
-      paint();
       if (wake) { wake.release().catch(() => {}); wake = null; }
     };
     const start = () => {
@@ -380,37 +380,65 @@
       acc = window.scrollY;
       set = -1;
       last = 0;
-      paint();
-      box.classList.remove('is-tip');
       // keep the phone screen awake while the page reads itself
       try { if (navigator.wakeLock) navigator.wakeLock.request('screen').then(w => { if (on) wake = w; else w.release(); }).catch(() => {}); } catch (e) { /* not supported */ }
     };
-    btn.addEventListener('click', () => (on ? stop() : start()));
+    // the round button only opens / closes the speeds; picking a speed folds them back and (re)starts the glide
+    btn.addEventListener('click', () => {
+      open = !open;
+      clearTimeout(tipT);
+      box.classList.remove('is-tip');
+      paint();
+    });
     pills.forEach(p => p.addEventListener('click', () => {
       speed = +p.dataset.v;
       try { localStorage.setItem('or-autoscroll', String(speed)); } catch (e) { /* private mode */ }
+      open = false;
+      if (!on) start();
       paint();
     }));
-    // any manual scrolling or touching the page takes over again
-    const manual = e => { if (on && !box.contains(e.target)) stop(); };
+    // touching the page anywhere else (the stardust still bursts), the mouse wheel or keys stop it
+    const manual = e => {
+      if (box.contains(e.target) || (!on && !open)) return;
+      stop();
+      open = false;
+      paint();
+    };
     window.addEventListener('wheel', manual, { passive: true });
+    window.addEventListener('pointerdown', manual, { passive: true });
     window.addEventListener('touchstart', manual, { passive: true });
-    window.addEventListener('keydown', e => { if (on && ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Escape'].includes(e.key)) stop(); });
-    document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); });
+    window.addEventListener('keydown', e => { if (on && ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Escape'].includes(e.key)) { stop(); paint(); } });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) { stop(); paint(); } });
+    // on phones, while the FAB is still hidden, the button sits just above the hero's "Let's talk" button
+    // (re-read now and then: the hero still settles after load)
+    const heroSpot = () => {
+      heroBottom = 0;
+      if (heroCta && S.vw <= 760) {
+        const top = docTop(heroCta);
+        if (top < S.vh) heroBottom = Math.round(S.vh - top + 14);
+      }
+    };
+    onMeasure(heroSpot);
+    let fr = 0;
     paint();
 
+    let lift = -1;
     onFrame(now => {
-      const blocked = doc.classList.contains('is-locked') || doc.classList.contains('sv-open');
-      if (on && blocked) stop();
-      const show = on || (fab.classList.contains('is-on') && !blocked);
+      const blocked = doc.classList.contains('is-locked') || doc.classList.contains('sv-open') || !doc.classList.contains('is-ready');
+      if (blocked && (on || open)) { stop(); open = false; paint(); }
+      const show = !blocked;
       if (show !== shown) {
         shown = show;
         box.classList.toggle('is-on', show);
-        // the first time it appears it says what it does, then folds to the round button
+        // the first time it appears it says what it does
         clearTimeout(tipT);
-        if (show && !tipDone) { tipDone = true; box.classList.add('is-tip'); tipT = setTimeout(() => box.classList.remove('is-tip'), 3200); }
+        if (show && !tipDone) { tipDone = true; box.classList.add('is-tip'); tipT = setTimeout(() => box.classList.remove('is-tip'), 3600); }
         if (!show) box.classList.remove('is-tip');
       }
+      const fabOn = fab.classList.contains('is-on');
+      if (!fabOn && ++fr % 30 === 0) heroSpot();
+      const l = !fabOn && heroBottom && S.y < S.vh * 0.25 ? heroBottom : 0;
+      if (l !== lift) { lift = l; box.style.bottom = l ? 'calc(' + l + 'px + env(safe-area-inset-bottom))' : ''; }
       if (!on) return;
       const dt = last ? Math.min(0.25, (now - last) / 1000) : 0;
       last = now;
@@ -423,7 +451,7 @@
         if (lenis) lenis.scrollTo(set, { immediate: true, force: true });
         else window.scrollTo({ top: set, behavior: 'instant' });
       }
-      if (acc >= max - 1) stop();
+      if (acc >= max - 1) { stop(); paint(); }
     });
   });
 
