@@ -70,3 +70,17 @@ Yes. Domain, hosting, SSL, backups, analytics and ongoing updates can all be han
 - [GitHub](https://github.com/nexgen-fullstack)
 - [Instagram](https://www.instagram.com/nexgen_stack/)
 - [Facebook](https://www.facebook.com/profile.php?id=61591835461533)
+
+## Service area
+Funchal, Câmara de Lobos, Santa Cruz, Caniço, Machico, Ribeira Brava, Ponta do Sol, Calheta, São Vicente, Santana, Porto Moniz, Porto Santo — all of Madeira; Portugal; remote work worldwide.
+
+## In other languages
+- English (en): ORION — web design, development, SEO/GEO, Google Maps, Google Ads and AWS cloud services in Madeira, Portugal, for clients worldwide. — https://nexgen-fullstack.github.io/orion/
+- Português (pt-PT): ORION — design e desenvolvimento web, SEO/GEO, Google Maps, Google Ads e cloud AWS na Madeira, Portugal, para clientes de todo o mundo. — https://nexgen-fullstack.github.io/orion/pt/
+- Українська (uk): ORION — дизайн і розробка сайтів, SEO/GEO, Google Maps, Google Ads та хмара AWS на Мадейрі (Португалія) для клієнтів з усього світу. — https://nexgen-fullstack.github.io/orion/ua/
+- Deutsch (de): ORION — Webdesign, Entwicklung, SEO/GEO, Google Maps, Google Ads und AWS-Cloud-Services auf Madeira, Portugal, für Kunden weltweit. — https://nexgen-fullstack.github.io/orion/de/
+- Español (es): ORION — diseño web, desarrollo, SEO/GEO, Google Maps, Google Ads y servicios cloud AWS en Madeira, Portugal, para clientes de todo el mundo. — https://nexgen-fullstack.github.io/orion/es/
+- Italiano (it): ORION — web design, sviluppo, SEO/GEO, Google Maps, Google Ads e servizi cloud AWS a Madeira, Portogallo, per clienti in tutto il mondo. — https://nexgen-fullstack.github.io/orion/it/
+- Français (fr): ORION — conception web, développement, SEO/GEO, Google Maps, Google Ads et services cloud AWS à Madère, Portugal, pour des clients du monde entier. — https://nexgen-fullstack.github.io/orion/fr/
+
+Full multilingual details (services and FAQ in every language): https://nexgen-fullstack.github.io/orion/llms-full.txt

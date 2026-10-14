@@ -1293,7 +1293,7 @@ void main(){
   const IMG = ASSETS + 'img/work/';
   const IW = { hero: 1600, about: 1200, card: 900, prod: 720 };
   const SZ = {
-    tile: { full: '440px', half: '220px', card: '150px' },
+    tile: { full: '(max-width: 760px) 280px, 430px', half: '(max-width: 760px) 140px, 215px', card: '(max-width: 760px) 95px, 145px' },
     modal: { full: 'min(1180px, 94vw)', half: '(max-width: 760px) 94vw, 560px', card: '(max-width: 760px) 94vw, 380px' },
     phone: { full: '220px', half: '220px', card: '220px' }
   };
@@ -1302,7 +1302,7 @@ void main(){
     const b = IMG + s.id + '-' + slot;
     const w = IW[kind];
     return '<img src="' + b + '-sm.webp" srcset="' + b + '-sm.webp ' + (w / 2) + 'w, ' + b + '.webp ' + w + 'w" sizes="' + sizes + '" alt=""' +
-      (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async">';
+      (eager ? ' fetchpriority="high"' : ' loading="lazy" fetchpriority="low"') + ' decoding="async">';
   };
 
   function sitePage(s, mode) {
