@@ -363,9 +363,12 @@
     let tipT = 0;
     let tipDone = false;
     let heroBottom = 0;
+    let dir = 1; // 1 = down, -1 = up (after reaching the end of the page)
+    let fi = 1000 / 60; // typical frame interval of this screen (60/90/120 Hz), learned while gliding
 
     const paint = () => {
       box.classList.toggle('is-play', on);
+      box.classList.toggle('is-up', dir < 0);
       box.classList.toggle('is-open', open);
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       btn.setAttribute('aria-label', (T.as_on || 'Auto-scroll') + (on ? ' · ' + num.format(speed) + '×' : ''));
@@ -444,6 +447,11 @@
       }
       const fabOn = fab.classList.contains('is-on');
       if (!fabOn && fr < 900 && ++fr % 30 === 0) heroSpot(); // only while the hero settles
+      // at the very end the arrow turns round: the next glide goes back up; near the top it points down again
+      if (!on) {
+        const d = S.y >= docMax - S.vh - 4 ? -1 : S.y < S.vh * 0.5 ? 1 : dir;
+        if (d !== dir) { dir = d; paint(); }
+      }
       const l = !fabOn && heroBottom && S.y < S.vh * 0.25 ? heroBottom : 0;
       if (l !== lift) { lift = l; box.style.translate = l ? '0 ' + (88 - l) + 'px' : ''; } // moved by transform, not layout
     });
@@ -451,18 +459,23 @@
     // so the browser never has to recalculate layout just to scroll, and every effect sees the new position
     preFrame = now => {
       if (!on) return;
-      const dt = last ? Math.min(0.25, (now - last) / 1000) : 0;
+      // a constant step per frame (not "time since the last frame"): when the phone drops a frame the page
+      // simply pauses for it instead of leaping to catch up, which is what made the glide look jumpy
+      const dt = last ? now - last : 0;
       last = now;
+      if (dt > 4 && dt < 40) fi += (dt - fi) * 0.05;
       const y = window.scrollY;
       if (set >= 0 && Math.abs(y - set) > 2) acc = y; // the page moved under us (layout shift) — continue from there
       const max = docMax - S.vh;
-      acc = Math.min(max, acc + PX * speed * dt);
-      set = acc; // fractional on purpose: phones scroll in device pixels, so slow speeds stay smooth
-      if (Math.abs(set - y) >= 0.25) {
+      acc = clamp(acc + dir * PX * speed * fi / 1000, 0, max);
+      // land on whole screen pixels: in-between positions make the text shimmer while it moves
+      const dpr = window.devicePixelRatio || 1;
+      set = Math.round(acc * dpr) / dpr;
+      if (Math.abs(set - y) >= 0.2) {
         if (lenis) lenis.scrollTo(set, { immediate: true, force: true });
         else window.scrollTo({ top: set, behavior: 'instant' });
       }
-      if (acc >= max - 1) { stop(); paint(); }
+      if (dir > 0 ? acc >= max - 1 : acc <= 0) { stop(); dir = -dir; paint(); }
     };
   });
 
@@ -1785,8 +1798,8 @@ void main(){
         const W = Math.max(8, N * 0.12);
         const head = prog * (N + W);
         for (let i = 0; i < N; i++) {
-          const o = 0.16 + 0.84 * clamp((head - i) / W, 0, 1);
-          if (Math.abs(o - last[i]) > 0.01) { chars[i].style.opacity = o.toFixed(3); last[i] = o; }
+          const o = Math.round((0.16 + 0.84 * clamp((head - i) / W, 0, 1)) * 25) / 25; // 25 steps: fewer style writes, same look
+          if (o !== last[i]) { chars[i].style.opacity = o.toFixed(3); last[i] = o; }
         }
       });
     }
@@ -1862,6 +1875,8 @@ void main(){
     if (!stack || reduce) return;
     const cards = $$('.card', stack);
     const N = cards.length;
+    const shades = cards.map(c => { const d = document.createElement('i'); d.className = 'card__shade'; d.setAttribute('aria-hidden', 'true'); c.append(d); return d; });
+    const was = cards.map(() => '');
     let top = 0;
     let h = 0;
     onMeasure(() => { top = docTop(stack); h = stack.offsetHeight; });
@@ -1874,8 +1889,11 @@ void main(){
         const start = i / (N - 1);
         const local = clamp((p - start) / (1 - start), 0, 1);
         const target = 1 - (N - 1 - i) * 0.045;
-        cards[i].style.transform = 'scale(' + (1 - local * (1 - target)).toFixed(4) + ')';
-        cards[i].style.setProperty('--shade', (local * 0.55).toFixed(3));
+        const sc = (1 - local * (1 - target)).toFixed(4);
+        if (sc === was[i]) continue; // nothing changed for this card — no style write
+        was[i] = sc;
+        cards[i].style.transform = 'scale(' + sc + ')';
+        shades[i].style.opacity = (local * 0.55).toFixed(3);
       }
     });
   });
@@ -1927,6 +1945,13 @@ void main(){
     const track = $('.process__track');
     const bar = $('.process__bar');
     if (!sec || !track) return;
+    // progress lines are scaled directly (a --p custom property on the track made every card recalculate each frame)
+    const line = document.createElement('i');
+    line.className = 'process__line';
+    line.setAttribute('aria-hidden', 'true');
+    track.prepend(line);
+    const barI = bar && $('i', bar);
+    let lastP = '';
     const mq = matchMedia('(min-width: 901px) and (prefers-reduced-motion: no-preference)');
     let horiz = false;
     let dist = 0;
@@ -1951,10 +1976,10 @@ void main(){
         if (y < -S.vh || y > dist + S.vh) return;
         const p = clamp(y / (dist || 1), 0, 1);
         track.style.transform = 'translate3d(' + (-p * dist).toFixed(1) + 'px,0,0)';
-        if (bar) bar.style.setProperty('--p', p.toFixed(4));
+        if (barI) barI.style.transform = 'scaleX(' + p.toFixed(4) + ')';
       } else {
-        const p = clamp((S.y + S.vh * 0.7 - tTop) / tH, 0, 1);
-        track.style.setProperty('--p', p.toFixed(4));
+        const p = clamp((S.y + S.vh * 0.7 - tTop) / tH, 0, 1).toFixed(4);
+        if (p !== lastP) { lastP = p; line.style.transform = 'scaleY(' + p + ')'; }
       }
     });
   });
@@ -2982,6 +3007,50 @@ void main(){
         near = best;
       }
     });
+  });
+
+  /* ---------- calm: pause the paint-heavy decorative loops when nobody can see them ---------- */
+  safe('calm', () => {
+    const els = $$('.btn--grad, .btn--brand, .rotator__word, .vc-line, .step--cta, .card, .scroll-cue');
+    if (window.IntersectionObserver && els.length) {
+      const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('is-calm', !e.isIntersecting)), { rootMargin: '80px 0px' });
+      els.forEach(el => io.observe(el));
+    }
+    // while the page moves (finger or auto-scroll) they hold still, so every frame goes to the scrolling itself
+    let moving = false;
+    let still = 0;
+    onFrame(now => {
+      if (Math.abs(S.vy) > 0.3) still = now;
+      const m = now - still < 220;
+      if (m !== moving) { moving = m; doc.classList.toggle('is-moving', m); }
+    });
+  });
+
+  /* ---------- warm-up: quietly load and decode the lazy pictures while the visitor is still on the first screen ---------- */
+  // (otherwise dozens of concept-site photos load and decode at the moment the reel scrolls in — that was a visible hitch)
+  safe('warm', () => {
+    const c = navigator.connection;
+    if (c && (c.saveData || /2g/.test(c.effectiveType || ''))) return;
+    const idle = fn => (window.requestIdleCallback ? requestIdleCallback(fn, { timeout: 600 }) : setTimeout(fn, 60));
+    const run = () => {
+      const imgs = $$('img[loading="lazy"]');
+      let i = 0;
+      const next = () => {
+        if (i >= imgs.length) return;
+        const im = imgs[i++];
+        let done = false;
+        const go = () => { if (!done) { done = true; idle(next); } };
+        const dec = () => (im.decode ? im.decode().catch(() => {}).then(go) : go());
+        if (im.complete && im.naturalWidth) { dec(); return; }
+        im.addEventListener('load', dec, { once: true });
+        im.addEventListener('error', go, { once: true });
+        im.loading = 'eager';
+        setTimeout(go, 4000); // never let one slow picture hold up the rest
+      };
+      next();
+    };
+    const start = () => setTimeout(() => idle(run), 1200);
+    if (document.readyState === 'complete') start(); else window.addEventListener('load', start, { once: true });
   });
 
   /* ---------- offline cache: repeat visits load styles, scripts, fonts and images straight from the phone ---------- */
