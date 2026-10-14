@@ -42,7 +42,7 @@ smile-about: https://unsplash.com/photos/Pc8lpKJwecM — Ozkan Guner
 smile-c1: https://unsplash.com/photos/vVKh9xeLub4 — Benyamin Bohlouli
 smile-c2: https://unsplash.com/photos/QA9fRIi6sFw — Caroline LM
 smile-c3: https://unsplash.com/photos/KzmhiJJ041M — Kamal Hoseinianzade
-smile-hero: https://unsplash.com/photos/oOhTXx5mJqI — Rita Malçok
+smile-hero: https://unsplash.com/photos/jDem8tPXwOA — Amir Seilsepour
 surf-about: https://unsplash.com/photos/w029XMQEHEE — Juliane Liebermann
 surf-c1: https://unsplash.com/photos/7M3C8KjCEIQ — Victoria Nezh
 surf-c2: https://unsplash.com/photos/zRd9jDzZxnU — Ashutosh Gupta

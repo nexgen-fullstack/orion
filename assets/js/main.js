@@ -330,6 +330,103 @@
     });
   });
 
+  /* ---------- auto-scroll: round button above the contact FAB, the page glides down by itself ---------- */
+  safe('autoscroll', () => {
+    const fab = $('.fab');
+    if (!fab) return;
+    const SPEEDS = [0.5, 1, 1.5, 2, 3];
+    const PX = 55; // px per second at 1×
+    const num = new Intl.NumberFormat(T.locale || 'en-GB', { maximumFractionDigits: 1 });
+    let speed = 1;
+    try { const v = parseFloat(localStorage.getItem('or-autoscroll')); if (SPEEDS.includes(v)) speed = v; } catch (e) { /* private mode */ }
+    const ICO_GO = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l6 6 6-6M6 12l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const ICO_STOP = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5.5" width="3.6" height="13" rx="1.2" fill="currentColor"/><rect x="13.9" y="5.5" width="3.6" height="13" rx="1.2" fill="currentColor"/></svg>';
+    const box = document.createElement('div');
+    box.className = 'asc';
+    box.innerHTML = '<div class="asc__speeds" role="group" aria-label="' + (T.as_speed || 'Speed') + '">' +
+      SPEEDS.map(v => '<button type="button" data-v="' + v + '">' + num.format(v) + '×</button>').join('') + '</div>' +
+      '<button class="asc__btn" type="button" aria-pressed="false"><span class="asc__ico"></span><b class="asc__x"></b>' +
+      '<span class="asc__tip" aria-hidden="true">' + (T.as_on || 'Auto-scroll') + '</span></button>';
+    fab.after(box);
+    const btn = $('.asc__btn', box);
+    const ico = $('.asc__ico', box);
+    const badge = $('.asc__x', box);
+    const pills = $$('.asc__speeds button', box);
+    let on = false;
+    let acc = 0;
+    let set = -1;
+    let last = 0;
+    let wake = null;
+    let shown = false;
+    let tipT = 0;
+    let tipDone = false;
+
+    const paint = () => {
+      box.classList.toggle('is-play', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.setAttribute('aria-label', (on ? T.as_off || 'Stop' : T.as_on || 'Auto-scroll') + ' · ' + num.format(speed) + '×');
+      ico.innerHTML = on ? ICO_STOP : ICO_GO;
+      badge.textContent = num.format(speed) + '×';
+      pills.forEach(p => p.classList.toggle('is-on', +p.dataset.v === speed));
+    };
+    const stop = () => {
+      if (!on) return;
+      on = false;
+      paint();
+      if (wake) { wake.release().catch(() => {}); wake = null; }
+    };
+    const start = () => {
+      on = true;
+      acc = window.scrollY;
+      set = -1;
+      last = 0;
+      paint();
+      box.classList.remove('is-tip');
+      // keep the phone screen awake while the page reads itself
+      try { if (navigator.wakeLock) navigator.wakeLock.request('screen').then(w => { if (on) wake = w; else w.release(); }).catch(() => {}); } catch (e) { /* not supported */ }
+    };
+    btn.addEventListener('click', () => (on ? stop() : start()));
+    pills.forEach(p => p.addEventListener('click', () => {
+      speed = +p.dataset.v;
+      try { localStorage.setItem('or-autoscroll', String(speed)); } catch (e) { /* private mode */ }
+      paint();
+    }));
+    // any manual scrolling or touching the page takes over again
+    const manual = e => { if (on && !box.contains(e.target)) stop(); };
+    window.addEventListener('wheel', manual, { passive: true });
+    window.addEventListener('touchstart', manual, { passive: true });
+    window.addEventListener('keydown', e => { if (on && ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Escape'].includes(e.key)) stop(); });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); });
+    paint();
+
+    onFrame(now => {
+      const blocked = doc.classList.contains('is-locked') || doc.classList.contains('sv-open');
+      if (on && blocked) stop();
+      const show = on || (fab.classList.contains('is-on') && !blocked);
+      if (show !== shown) {
+        shown = show;
+        box.classList.toggle('is-on', show);
+        // the first time it appears it says what it does, then folds to the round button
+        clearTimeout(tipT);
+        if (show && !tipDone) { tipDone = true; box.classList.add('is-tip'); tipT = setTimeout(() => box.classList.remove('is-tip'), 3200); }
+        if (!show) box.classList.remove('is-tip');
+      }
+      if (!on) return;
+      const dt = last ? Math.min(0.25, (now - last) / 1000) : 0;
+      last = now;
+      const y = window.scrollY;
+      if (set >= 0 && Math.abs(y - set) > 2) acc = y; // the page moved under us (layout shift) — continue from there
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      acc = Math.min(max, acc + PX * speed * dt);
+      set = acc; // fractional on purpose: phones scroll in device pixels, so slow speeds stay smooth
+      if (Math.abs(set - y) >= 0.25) {
+        if (lenis) lenis.scrollTo(set, { immediate: true, force: true });
+        else window.scrollTo({ top: set, behavior: 'instant' });
+      }
+      if (acc >= max - 1) stop();
+    });
+  });
+
   /* ---------- clocks (Madeira time) ---------- */
   safe('clock', () => {
     const fmt = new Intl.DateTimeFormat(T.locale || 'en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Atlantic/Madeira' });
