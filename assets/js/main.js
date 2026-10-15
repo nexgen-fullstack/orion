@@ -198,16 +198,25 @@
     const num = $('.loader__count span', loader);
     const bar = $('.loader__bar i', loader);
     const t0 = performance.now();
-    const dur = 2350;
+    const dur = 2600;   // the constellation needs this long to draw itself
+    const MAX = 7000;   // never keep anyone waiting longer than this
     let loaded = document.readyState === 'complete';
     window.addEventListener('load', () => { loaded = true; });
+    // first visit: the intro holds until the page and all its pictures are loaded and decoded,
+    // so nothing has to load later while the visitor scrolls. The counter shows the real progress.
+    let w = null;
+    let shown = 0;
     const step = now => {
-      let p = clamp((now - t0) / dur, 0, 1);
-      if (!loaded && now - t0 < 2800) p = Math.min(p, 0.92);
-      const e = 1 - Math.pow(1 - p, 3);
-      num.textContent = Math.round(e * 100);
-      bar.style.transform = 'scaleX(' + e.toFixed(3) + ')';
-      if (p < 1) { requestAnimationFrame(step); return; }
+      if (!w) w = warmAll();
+      const el = now - t0;
+      const pt = clamp(el / dur, 0, 1);
+      const real = loaded ? 0.25 + 0.75 * w.frac : 0.25 * Math.min(1, el / 1500);
+      let target = Math.min(1 - Math.pow(1 - pt, 3), (loaded && w.done) || el > MAX ? 1 : real * 0.99);
+      shown += (target - shown) * (target >= 1 ? 0.2 : 0.1);
+      if (target >= 1 && shown > 0.995) shown = 1;
+      num.textContent = Math.round(shown * 100);
+      bar.style.transform = 'scaleX(' + shown.toFixed(3) + ')';
+      if (shown < 1) { requestAnimationFrame(step); return; }
       setTimeout(() => {
         loader.classList.add('is-done');
         jump.t = performance.now();
@@ -464,10 +473,11 @@
       const dt = last ? now - last : 0;
       last = now;
       if (dt > 4 && dt < 40) fi += (dt - fi) * 0.05;
+      const st = dt ? Math.min(dt, fi * 1.6) : fi; // one late frame is caught up gently, a long stall is not
       const y = window.scrollY;
       if (set >= 0 && Math.abs(y - set) > 2) acc = y; // the page moved under us (layout shift) — continue from there
       const max = docMax - S.vh;
-      acc = clamp(acc + dir * PX * speed * fi / 1000, 0, max);
+      acc = clamp(acc + dir * PX * speed * st / 1000, 0, max);
       // land on whole screen pixels: in-between positions make the text shimmer while it moves
       const dpr = window.devicePixelRatio || 1;
       set = Math.round(acc * dpr) / dpr;
@@ -1877,10 +1887,33 @@ void main(){
     const N = cards.length;
     const shades = cards.map(c => { const d = document.createElement('i'); d.className = 'card__shade'; d.setAttribute('aria-hidden', 'true'); c.append(d); return d; });
     const was = cards.map(() => '');
+    const items = cards.map(c => c.closest('.stack__item') || c);
+    let tops = [];
+    const mode = cards.map(() => '');
     let top = 0;
     let h = 0;
-    onMeasure(() => { top = docTop(stack); h = stack.offsetHeight; });
+    onMeasure(() => { top = docTop(stack); h = stack.offsetHeight; tops = items.map(docTop); });
+    // only the 2–3 cards around the screen are fully drawn: buried cards keep just their frame (their content is
+    // hidden under the newer card anyway) and cards further down wait. Six full-screen layers at once ran the phone's
+    // graphics memory out — it could not repaint fast enough and showed half-drawn, overlapping cards.
+    const layers = () => {
+      let front = -1;
+      let enter = -1;
+      for (let i = 0; i < N; i++) {
+        if (S.y >= tops[i] - 2) front = i;
+        if (S.y + S.vh * 1.15 > tops[i]) enter = i;
+      }
+      for (let i = 0; i < N; i++) {
+        const m = i > enter ? 'off' : i <= front - 2 ? 'buried' : i === front - 1 ? 'under' : '';
+        if (m !== mode[i]) {
+          if (mode[i]) cards[i].classList.remove('is-' + mode[i]);
+          if (m) cards[i].classList.add('is-' + m);
+          mode[i] = m;
+        }
+      }
+    };
     onFrame(() => {
+      layers();
       const range = h - S.vh;
       const y = S.y - top;
       if (range <= 0 || y < -S.vh || y > h) return;
@@ -3026,30 +3059,44 @@ void main(){
     });
   });
 
-  /* ---------- warm-up: quietly load and decode the lazy pictures while the visitor is still on the first screen ---------- */
-  // (otherwise dozens of concept-site photos load and decode at the moment the reel scrolls in — that was a visible hitch)
-  safe('warm', () => {
+  /* ---------- warm-up: load and decode every lazy picture before the visitor needs it ---------- */
+  // (otherwise dozens of photos load and decode at the moment their section scrolls in — a visible hitch).
+  // On the first visit the intro waits for this (see 'intro'); on later visits it runs quietly after load.
+  let warmJob = null;
+  function warmAll() {
+    if (warmJob) return warmJob;
+    const job = { frac: 0, done: false };
+    warmJob = job;
     const c = navigator.connection;
-    if (c && (c.saveData || /2g/.test(c.effectiveType || ''))) return;
-    const idle = fn => (window.requestIdleCallback ? requestIdleCallback(fn, { timeout: 600 }) : setTimeout(fn, 60));
-    const run = () => {
-      const imgs = $$('img[loading="lazy"]');
-      let i = 0;
-      const next = () => {
-        if (i >= imgs.length) return;
-        const im = imgs[i++];
-        let done = false;
-        const go = () => { if (!done) { done = true; idle(next); } };
-        const dec = () => (im.decode ? im.decode().catch(() => {}).then(go) : go());
-        if (im.complete && im.naturalWidth) { dec(); return; }
-        im.addEventListener('load', dec, { once: true });
-        im.addEventListener('error', go, { once: true });
-        im.loading = 'eager';
-        setTimeout(go, 4000); // never let one slow picture hold up the rest
+    const imgs = (c && (c.saveData || /2g/.test(c.effectiveType || ''))) ? [] : $$('img[loading="lazy"]');
+    const n = imgs.length;
+    if (!n) { job.frac = 1; job.done = true; return job; }
+    let i = 0;
+    let fin = 0;
+    const one = () => {
+      if (i >= n) return;
+      const im = imgs[i++];
+      let ok = false;
+      const go = () => {
+        if (ok) return;
+        ok = true;
+        fin++;
+        job.frac = fin / n;
+        if (fin >= n) job.done = true;
+        one();
       };
-      next();
+      const dec = () => (im.decode ? im.decode().catch(() => {}).then(go) : go());
+      if (im.complete && im.naturalWidth) { dec(); return; }
+      im.addEventListener('load', dec, { once: true });
+      im.addEventListener('error', go, { once: true });
+      im.loading = 'eager';
+      setTimeout(go, 6000); // never let one slow picture hold up the rest
     };
-    const start = () => setTimeout(() => idle(run), 1200);
+    for (let k = 0; k < 6; k++) one(); // six at a time
+    return job;
+  }
+  safe('warm', () => {
+    const start = () => setTimeout(warmAll, 900);
     if (document.readyState === 'complete') start(); else window.addEventListener('load', start, { once: true });
   });
 

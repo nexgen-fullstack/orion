@@ -797,6 +797,12 @@ html.sv-open .fab { transform: translateY(160%); }
 }
 /* darkening of stacked cards: a real child whose opacity JS sets directly (a custom property on .card made the whole card recalculate every frame) */
 .card__shade { position: absolute; inset: -2px; border-radius: inherit; background: #000; opacity: 0; pointer-events: none; z-index: 5; }
+/* stack layer budget (see safe('stack'): buried cards keep only their frame, cards not reached yet are not drawn */
+.card.is-buried > :not(.card__shade), .card.is-off,
+.card.is-under > :not(.card__shade, .card__top) { visibility: hidden; } /* the covered card shows only its title strip */
+.card.is-under .card__vis * { animation-play-state: paused !important; }
+.card.is-buried, .card.is-off { will-change: auto; }
+.card.is-buried *, .card.is-off * { animation-play-state: paused !important; }
 .card__top { grid-column: 1 / -1; display: flex; align-items: center; gap: clamp(14px, 2.2vw, 32px); }
 .card__num { font-family: var(--fd); font-weight: 900; font-size: clamp(48px, 7.5vw, 116px); line-height: .85; letter-spacing: -.04em; background: var(--silver); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .card__meta { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
@@ -808,6 +814,7 @@ html.sv-open .fab { transform: translateY(160%); }
 @media (max-width: 900px) {
   .stack__item { padding-top: calc(var(--nav) + 10px + var(--i) * 14px); }
   .card { grid-template-columns: 1fr; grid-template-rows: auto auto minmax(0, 1fr); height: calc(100svh - var(--nav) - 76px); min-height: 0; max-height: 760px; gap: 14px; }
+  .card, .card.card { box-shadow: 0 -20px 50px -30px rgba(0, 0, 0, .9); }
   .card__top { gap: 12px; }
   .card__cta { display: none; }
   .card__info { gap: 12px; padding: 0 2px; justify-content: flex-start; }
