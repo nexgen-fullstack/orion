@@ -1229,11 +1229,18 @@ void main(){
       band: ['Best rate when you book direct', 'Check dates'] }
   ];
   // every concept lives under the ORION name in the address bar
+  // dashboard row colours come from the English original, before the texts are translated
+  SITES.forEach(s => { if (s.rows) s.st = s.rows.map(r => (r[2] === 'Healthy' ? 'ok' : r[2] === 'Scaling' ? 'mid' : 'bad')); });
+  // the "Instant Demo Sites" phones show every language on purpose, so they read an untouched English copy
+  const EN_SITES = JSON.parse(JSON.stringify(SITES));
+  // the concept sites speak the page language (i18n "sites" block); English pages keep the originals
+  if (T.sites) SITES.forEach(s => { if (T.sites[s.id]) Object.assign(s, T.sites[s.id]); });
+  const SP = T.sp || {};
   const SLUG = { atlantico: 'atlantico', levada: 'levada-trails', bloom: 'bloom', volt: 'volt-gym', cloudops: 'cloudops', vinha: 'casa-da-vinha',
     funchal: 'funchal-living', reef: 'blue-reef-dive', smile: 'smile-clinic', surf: 'surf-moniz', nomad: 'nomad-hub', charter: 'sea-charter', quinta: 'quinta-azul' };
   const slug = s => SLUG[s.id] || s.id;
   // the three "Instant Demo Sites" phones: the same projects, generated in 7 languages
-  const byId = id => SITES.find(s => s.id === id);
+  const byId = id => EN_SITES.find(s => s.id === id);
   const PLANG = ['pt', 'en', 'de', 'es', 'it', 'fr', 'ua'];
   const ALLS = { en: 'See all →', pt: 'Ver tudo →', de: 'Alle →', es: 'Ver todo →', it: 'Vedi tutto →', fr: 'Tout voir →', ua: 'Усі →' };
   const PVALS = { atlantico: ['4.8★', '2009', '120'], quinta: ['24', '9.4', '5 min'], levada: ['18', '8', '4.9★'] };
@@ -1376,13 +1383,13 @@ void main(){
     const eager = mode === 'modal';
     if (s.l === 'dash') {
       const max = Math.max(...s.bars);
-      return '<div class="ts-page sp-app"><aside><b>' + esc(s.n) + '</b>' + s.menu.map((m, i) => '<a' + (i ? '' : ' class="on"') + '>' + esc(m) + '</a>').join('') + '<small>eu-west-1 · live</small></aside>' +
-        '<div class="sp-app__main"><div class="sp-app__top"><h4>Overview</h4><span><i></i>All systems normal</span></div>' +
+      return '<div class="ts-page sp-app"><aside><b>' + esc(s.n) + '</b>' + s.menu.map((m, i) => '<a' + (i ? '' : ' class="on"') + '>' + esc(m) + '</a>').join('') + '<small>' + esc(SP.live || 'eu-west-1 · live') + '</small></aside>' +
+        '<div class="sp-app__main"><div class="sp-app__top"><h4>' + esc(s.menu[0]) + '</h4><span><i></i>' + esc(SP.normal || 'All systems normal') + '</span></div>' +
         '<div class="sp-kpis">' + s.kpis.map(k => '<div><span>' + esc(k[0]) + '</span><b>' + esc(k[1]) + '</b><em>' + esc(k[2]) + '</em></div>').join('') + '</div>' +
-        '<div class="sp-chart"><div class="sp-chart__h"><b>Requests / min</b><span>last 14 days</span></div><div class="sp-chart__bars">' +
+        '<div class="sp-chart"><div class="sp-chart__h"><b>' + esc(SP.req || 'Requests / min') + '</b><span>' + esc(SP.days || 'last 14 days') + '</span></div><div class="sp-chart__bars">' +
         s.bars.map(v => '<i style="--h:' + Math.round(v / max * 100) + '%"></i>').join('') + '</div></div>' +
-        '<table class="sp-table"><thead><tr><th>Service</th><th>Region</th><th>Status</th><th>p95</th></tr></thead><tbody>' +
-        s.rows.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td><span class="st st--' + (r[2] === 'Healthy' ? 'ok' : r[2] === 'Scaling' ? 'mid' : 'bad') + '">' + esc(r[2]) + '</span></td><td>' + esc(r[3]) + '</td></tr>').join('') +
+        '<table class="sp-table"><thead><tr>' + (SP.th || ['Service', 'Region', 'Status', 'p95']).map(h => '<th>' + esc(h) + '</th>').join('') + '</tr></thead><tbody>' +
+        s.rows.map((r, i) => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td><span class="st st--' + s.st[i] + '">' + esc(r[2]) + '</span></td><td>' + esc(r[3]) + '</td></tr>').join('') +
         '</tbody></table></div></div>';
     }
     const shop = s.l === 'shop';
@@ -1393,7 +1400,7 @@ void main(){
     const hero = full
       ? '<section class="sp-hero sp-hero--full">' + pic(s, 'hero', 'hero', z.full, eager) + copy + '</section>'
       : '<section class="sp-hero sp-hero--split">' + copy + '<figure class="sp-media">' + pic(s, 'hero', 'hero', z.half, eager) + '</figure></section>';
-    const cards = '<section class="sp-sec"><div class="sp-sec__h"><h5>' + esc(s.sec) + '</h5><span>' + esc(s.all || (shop ? 'View all →' : 'See all →')) + '</span></div><div class="sp-cards' + (shop ? ' sp-cards--prod' : '') + (s.cards.length === 2 ? ' sp-cards--2' : '') + '">' +
+    const cards = '<section class="sp-sec"><div class="sp-sec__h"><h5>' + esc(s.sec) + '</h5><span>' + esc(s.all || (shop ? SP.viewall || 'View all →' : SP.seeall || 'See all →')) + '</span></div><div class="sp-cards' + (shop ? ' sp-cards--prod' : '') + (s.cards.length === 2 ? ' sp-cards--2' : '') + '">' +
       s.cards.map((c, i) => '<article>' + pic(s, (shop ? 'p' : 'c') + (i + 1), shop ? 'prod' : 'card', z.card) + '<div><b>' + esc(c[0]) + '</b><span>' + esc(c[1]) + '</span><em>' + esc(c[2]) + '</em></div></article>').join('') +
       '</div></section>';
     const about = s.about ? '<section class="sp-about">' + pic(s, 'about', 'about', z.half) + '<div><h5>' + esc(s.about[0]) + '</h5><p>' + esc(s.about[1]) + '</p><ul>' +
@@ -1404,7 +1411,7 @@ void main(){
       '<ul class="sp-stats">' + s.stats.map(x => '<li><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></li>').join('') + '</ul>' +
       cards + about +
       '<section class="sp-band"><h5>' + esc(s.band[0]) + '</h5><em class="sp-btn">' + esc(s.band[1]) + '</em></section>' +
-      '<footer class="sp-foot"><b>' + esc(s.n) + '</b><span>© 2026</span><span>Website by ORION</span></footer>' +
+      '<footer class="sp-foot"><b>' + esc(s.n) + '</b><span>© 2026</span><span>' + esc(SP.by || 'Website by ORION') + '</span></footer>' +
       '</div>';
   }
   const siteVars = s => '--bg:' + s.bg + ';--fg:' + s.fg + ';--ac:' + s.ac + ';--bt:' + (s.bt || '#fff') + ';--ff:' + (s.ff || 'var(--fd)');
