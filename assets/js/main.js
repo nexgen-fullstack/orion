@@ -36,7 +36,6 @@
   const layouts = [];
   const measures = [];
   const onFrame = fn => frames.push(fn);
-  let preFrame = null; // runs before the scroll position is read (auto-scroll moves the page here)
   const onLayout = fn => { layouts.push(fn); fn(); };
   const onMeasure = fn => { measures.push(fn); fn(); };
   const docTop = el => el.getBoundingClientRect().top + window.scrollY;
@@ -53,7 +52,6 @@
 
   const loop = now => {
     if (lenis) lenis.raf(now);
-    if (preFrame) preFrame(now);
     const y = window.scrollY;
     S.vy = y - S.y; S.y = y;
     for (let i = 0; i < frames.length; i++) frames[i](now);
@@ -199,20 +197,24 @@
     const bar = $('.loader__bar i', loader);
     const t0 = performance.now();
     const dur = 2600;   // the constellation needs this long to draw itself
-    const MAX = 7000;   // never keep anyone waiting longer than this
+    const MAX = 5000;   // never keep anyone waiting longer than this
     let loaded = document.readyState === 'complete';
     window.addEventListener('load', () => { loaded = true; });
     // first visit: the intro holds until the page and all its pictures are loaded and decoded,
     // so nothing has to load later while the visitor scrolls. The counter shows the real progress.
     let w = null;
     let shown = 0;
+    let prev = 0;
     const step = now => {
       if (!w) w = warmAll();
       const el = now - t0;
       const pt = clamp(el / dur, 0, 1);
       const real = loaded ? 0.25 + 0.75 * w.frac : 0.25 * Math.min(1, el / 1500);
       let target = Math.min(1 - Math.pow(1 - pt, 3), (loaded && w.done) || el > MAX ? 1 : real * 0.99);
-      shown += (target - shown) * (target >= 1 ? 0.2 : 0.1);
+      // eased by time, not per frame, so a slow phone (few frames) is not kept waiting longer
+      const fdt = prev ? Math.min(200, now - prev) : 16;
+      prev = now;
+      shown += (target - shown) * (1 - Math.exp(-fdt / (target >= 1 ? 70 : 150)));
       if (target >= 1 && shown > 0.995) shown = 1;
       num.textContent = Math.round(shown * 100);
       bar.style.transform = 'scaleX(' + shown.toFixed(3) + ')';
@@ -339,154 +341,6 @@
         if (fabShow && S.vw <= 760) fabT = setTimeout(() => fab.classList.add('is-mini'), 2500);
       }
     });
-  });
-
-  /* ---------- auto-scroll: round button on the right (above the hero CTA, later above the FAB); the page glides down by itself ---------- */
-  safe('autoscroll', () => {
-    const fab = $('.fab');
-    if (!fab) return;
-    const heroCta = $('.hero__cta');
-    const SPEEDS = [0.5, 1, 1.5, 2, 3];
-    const PX = 55; // px per second at 1×
-    const num = new Intl.NumberFormat(T.locale || 'en-GB', { maximumFractionDigits: 1 });
-    let speed = 1;
-    try { const v = parseFloat(localStorage.getItem('or-autoscroll')); if (SPEEDS.includes(v)) speed = v; } catch (e) { /* private mode */ }
-    const ICO = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l6 6 6-6M6 12l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    const box = document.createElement('div');
-    box.className = 'asc';
-    box.innerHTML = '<div class="asc__speeds" role="group" aria-label="' + (T.as_speed || 'Speed') + '">' +
-      SPEEDS.map(v => '<button type="button" data-v="' + v + '">' + num.format(v) + '×</button>').join('') + '</div>' +
-      '<button class="asc__btn" type="button" aria-expanded="false"><span class="asc__ico">' + ICO + '</span><b class="asc__x"></b>' +
-      '<span class="asc__tip" aria-hidden="true">' + (T.as_on || 'Auto-scroll') + '</span></button>';
-    fab.after(box);
-    const btn = $('.asc__btn', box);
-    const badge = $('.asc__x', box);
-    const pills = $$('.asc__speeds button', box);
-    let on = false;
-    let open = false;
-    let acc = 0;
-    let set = -1;
-    let last = 0;
-    let wake = null;
-    let shown = false;
-    let tipT = 0;
-    let tipDone = false;
-    let heroBottom = 0;
-    let dir = 1; // 1 = down, -1 = up (after reaching the end of the page)
-    let fi = 1000 / 60; // typical frame interval of this screen (60/90/120 Hz), learned while gliding
-
-    const paint = () => {
-      box.classList.toggle('is-play', on);
-      box.classList.toggle('is-up', dir < 0);
-      box.classList.toggle('is-open', open);
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      btn.setAttribute('aria-label', (T.as_on || 'Auto-scroll') + (on ? ' · ' + num.format(speed) + '×' : ''));
-      badge.textContent = num.format(speed) + '×';
-      pills.forEach(p => p.classList.toggle('is-on', on && +p.dataset.v === speed));
-    };
-    const stop = () => {
-      if (!on) return;
-      on = false;
-      if (wake) { wake.release().catch(() => {}); wake = null; }
-    };
-    const start = () => {
-      on = true;
-      acc = window.scrollY;
-      set = -1;
-      last = 0;
-      // keep the phone screen awake while the page reads itself
-      try { if (navigator.wakeLock) navigator.wakeLock.request('screen').then(w => { if (on) wake = w; else w.release(); }).catch(() => {}); } catch (e) { /* not supported */ }
-    };
-    // the round button only opens / closes the speeds; picking a speed folds them back and (re)starts the glide
-    btn.addEventListener('click', () => {
-      open = !open;
-      clearTimeout(tipT);
-      box.classList.remove('is-tip');
-      paint();
-    });
-    pills.forEach(p => p.addEventListener('click', () => {
-      speed = +p.dataset.v;
-      try { localStorage.setItem('or-autoscroll', String(speed)); } catch (e) { /* private mode */ }
-      open = false;
-      if (!on) start();
-      paint();
-    }));
-    // touching the page anywhere else (the stardust still bursts), the mouse wheel or keys stop it
-    const manual = e => {
-      if (box.contains(e.target) || (!on && !open)) return;
-      stop();
-      open = false;
-      paint();
-    };
-    window.addEventListener('wheel', manual, { passive: true });
-    window.addEventListener('pointerdown', manual, { passive: true });
-    window.addEventListener('touchstart', manual, { passive: true });
-    window.addEventListener('keydown', e => { if (on && ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Escape'].includes(e.key)) { stop(); paint(); } });
-    document.addEventListener('visibilitychange', () => { if (document.hidden) { stop(); paint(); } });
-    // on phones, while the FAB is still hidden, the button sits just above the hero's "Let's talk" button
-    // (re-read now and then: the hero still settles after load)
-    const heroSpot = () => {
-      heroBottom = 0;
-      if (heroCta && S.vw <= 760) {
-        const top = docTop(heroCta);
-        if (top < S.vh) heroBottom = Math.round(S.vh - top + 14);
-      }
-    };
-    onMeasure(heroSpot);
-    let fr = 0;
-    // page height cached (reading it every frame forces a layout and makes the glide stutter)
-    let docMax = document.documentElement.scrollHeight;
-    const remax = () => { docMax = document.documentElement.scrollHeight; };
-    onMeasure(remax);
-    if (window.ResizeObserver) new ResizeObserver(remax).observe(document.body);
-    paint();
-
-    let lift = -1;
-    onFrame(now => {
-      const blocked = doc.classList.contains('is-locked') || doc.classList.contains('sv-open') || !doc.classList.contains('is-ready');
-      if (blocked && (on || open)) { stop(); open = false; paint(); }
-      const show = !blocked;
-      if (show !== shown) {
-        shown = show;
-        box.classList.toggle('is-on', show);
-        // the first time it appears it says what it does
-        clearTimeout(tipT);
-        if (show && !tipDone) { tipDone = true; box.classList.add('is-tip'); tipT = setTimeout(() => box.classList.remove('is-tip'), 3600); }
-        if (!show) box.classList.remove('is-tip');
-      }
-      const fabOn = fab.classList.contains('is-on');
-      if (!fabOn && fr < 900 && ++fr % 30 === 0) heroSpot(); // only while the hero settles
-      // at the very end the arrow turns round: the next glide goes back up; near the top it points down again
-      if (!on) {
-        const d = S.y >= docMax - S.vh - 4 ? -1 : S.y < S.vh * 0.5 ? 1 : dir;
-        if (d !== dir) { dir = d; paint(); }
-      }
-      const l = !fabOn && heroBottom && S.y < S.vh * 0.25 ? heroBottom : 0;
-      if (l !== lift) { lift = l; box.style.translate = l ? '0 ' + (88 - l) + 'px' : ''; } // moved by transform, not layout
-    });
-    // the glide itself runs at the very start of each frame, before anything reads or writes the page,
-    // so the browser never has to recalculate layout just to scroll, and every effect sees the new position
-    preFrame = now => {
-      if (!on) return;
-      // a constant step per frame (not "time since the last frame"): when the phone drops a frame the page
-      // simply pauses for it instead of leaping to catch up, which is what made the glide look jumpy
-      const dt = last ? now - last : 0;
-      last = now;
-      if (dt > 4 && dt < 40) fi += (dt - fi) * 0.05;
-      const st = dt ? Math.min(dt, fi * 1.6) : fi; // one late frame is caught up gently, a long stall is not
-      const y = window.scrollY;
-      if (set >= 0 && Math.abs(y - set) > 2) acc = y; // the page moved under us (layout shift) — continue from there
-      const max = docMax - S.vh;
-      acc = clamp(acc + dir * PX * speed * st / 1000, 0, max);
-      // land on whole screen pixels: in-between positions make the text shimmer while it moves
-      const dpr = window.devicePixelRatio || 1;
-      set = Math.round(acc * dpr) / dpr;
-      if (Math.abs(set - y) >= 0.2) {
-        if (lenis) lenis.scrollTo(set, { immediate: true, force: true });
-        else window.scrollTo({ top: set, behavior: 'instant' });
-      }
-      if (dir > 0 ? acc >= max - 1 : acc <= 0) { stop(); dir = -dir; paint(); }
-    };
   });
 
   /* ---------- clocks (Madeira time) ---------- */
