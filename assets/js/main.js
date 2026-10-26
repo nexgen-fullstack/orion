@@ -515,6 +515,25 @@
       }, 2700);
     }
 
+    // phones: once it has settled after the pulse, the planet sits in the gap between the name and the lead —
+    // touching neither (sphere = 0.74 × 0.9 of the box after the pulse, see `settle` in the globe module).
+    // offsetTop ignores transforms, so the intro and scroll animations never skew the measurement.
+    const globeBox = $('.hero__globe');
+    const giantEl = $('.hero__giant');
+    const leadEl = $('.hero__lead');
+    const bottomEl = $('.hero__bottom');
+    if (globeBox && giantEl && leadEl && bottomEl) onMeasure(() => {
+      globeBox.style.top = globeBox.style.width = '';
+      if (S.vw > 760) return;
+      const top = title.offsetTop + giantEl.offsetTop + giantEl.offsetHeight;
+      const bot = bottomEl.offsetTop + leadEl.offsetTop;
+      const gap = bot - top - 16;
+      if (gap < 120) return;
+      const w = Math.min(S.vw * 1.04, gap / (0.74 * 0.9));
+      globeBox.style.top = Math.round((top + bot) / 2) + 'px';
+      globeBox.style.width = Math.round(w) + 'px';
+    });
+
     // scroll parallax for hero layers (only when CSS scroll-driven animations are not available)
     if (!reduce && !SDA) {
       onFrame(() => {
