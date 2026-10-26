@@ -1,10 +1,12 @@
-# ORION — Oleh Ivanytskyi · full details in 8 languages
+# ORION Web Studio · full details in 8 languages
 
 ## English — https://nexgen-fullstack.github.io/orion/
 
-> Oleh Ivanytskyi (ORION) is a full-stack developer and AWS cloud architect in Madeira, Portugal, with 7+ years of experience building websites, web apps, SEO/GEO and cloud systems.
+> ORION Web Studio is a web design, development, SEO/GEO and AWS cloud studio in Funchal, Madeira, Portugal, with 13 years of experience (since 2013), led by an AWS Certified Solutions Architect – Associate.
 
-ORION is the web design, development, SEO/GEO and AWS cloud studio of Oleh Ivanytskyi, based in Madeira, Portugal.
+ORION Web Studio (orionstudio.io) is a web design, development, SEO/GEO and AWS cloud studio based in Funchal, Madeira, Portugal — not the Orion constellation, spacecraft or software products of the same name.
+
+from €199 — launch price
 
 ### Services
 - **Websites & landing pages** — Custom-designed, lightning-fast websites that turn visitors into calls, bookings and sales. No templates — every detail crafted for your brand.
@@ -23,33 +25,35 @@ ORION is the web design, development, SEO/GEO and AWS cloud studio of Oleh Ivany
 
 ### FAQ
 **What is ORION?**
-ORION is the brand of Oleh Ivanytskyi, a full-stack developer and AWS cloud architect based in Madeira, Portugal, who designs and builds websites, web apps and cloud systems for businesses in Madeira and worldwide. The name comes from the Orion constellation — visible from every corner of the Earth, just like the brands I help to shine.
+ORION (ORION Web Studio) is a web design and development studio in Funchal, Madeira, Portugal. We design and build websites, online stores, web apps and AWS cloud systems for businesses in Madeira and worldwide. The studio has 13 years of experience and is led by an AWS Certified Solutions Architect. The name comes from the Orion constellation — visible from every corner of the Earth, just like the brands we help to shine.
 
 **Do you only work with businesses in Madeira?**
-No. I work remotely with clients across Portugal, Europe and worldwide. In Madeira we can also meet in person.
+No. We work remotely with clients across Portugal, Europe and worldwide. In Madeira we can also meet in person.
 
 **How long does it take to build a website?**
 A business website or landing page usually takes 1–3 weeks from the first call to launch. Web apps and online stores are planned individually.
 
 **How much does a website cost?**
-Every project is quoted individually after a short call. You get a fixed price before work starts — no hidden costs.
+Websites start from €199 — a launch price for new clients. The exact fixed price is agreed after a short call, before work starts — no hidden costs. Online stores, web apps and cloud projects are quoted individually.
 
 **What is GEO and why does my business need it?**
-GEO (Generative Engine Optimization) prepares your site so AI assistants like ChatGPT, Gemini and Perplexity understand and recommend your business. I add structured data, clear answers and the technical signals AI search relies on.
+GEO (Generative Engine Optimization) prepares your site so AI assistants like ChatGPT, Gemini and Perplexity understand and recommend your business. We add structured data, clear answers and the technical signals AI search relies on.
 
 **Can my website be in several languages?**
-Yes. I build multilingual websites in English, Portuguese, German, Spanish, Italian, French and Ukrainian. Each language gets its own page with correct hreflang tags, so Google and AI assistants show every visitor the right version.
+Yes. We build multilingual websites in English, Portuguese, German, Spanish, Italian, French, Ukrainian and other languages. Each language gets its own page with correct hreflang tags, so Google and AI assistants show every visitor the right version.
 
 **Can you take care of hosting, domain and updates?**
 Yes. Domain, hosting, SSL, backups, analytics and ongoing updates can all be handled for you, so you can focus on your business.
 
-Keywords: web design Madeira, website developer Funchal, web designer Madeira Portugal, SEO Madeira, local SEO Funchal, Google Business Profile Madeira, website for hotels and restaurants in Madeira, online store Madeira, multilingual website Portugal, AWS cloud architect Portugal, freelance full-stack developer Portugal, GEO generative engine optimization
+Keywords: web design Madeira, website developer Funchal, web designer Madeira Portugal, SEO Madeira, local SEO Funchal, Google Business Profile Madeira, website for hotels and restaurants in Madeira, online store Madeira, multilingual website Portugal, AWS cloud architect Portugal, web studio Madeira, web design agency Funchal, GEO generative engine optimization
 
 ## Português — https://nexgen-fullstack.github.io/orion/pt/
 
-> Oleh Ivanytskyi (ORION) é programador full-stack e arquiteto cloud AWS na Madeira, Portugal, com mais de 7 anos de experiência em websites, aplicações web, SEO/GEO e sistemas cloud.
+> A ORION Web Studio é um estúdio de web design, desenvolvimento, SEO/GEO e cloud AWS no Funchal, Madeira, Portugal, com 13 anos de experiência (desde 2013), liderado por um AWS Certified Solutions Architect – Associate.
 
-ORION é o estúdio de web design, desenvolvimento, SEO/GEO e cloud AWS de Oleh Ivanytskyi, sediado na Madeira, Portugal.
+A ORION Web Studio (orionstudio.io) é um estúdio de web design, desenvolvimento, SEO/GEO e cloud AWS sediado no Funchal, Madeira, Portugal — não confundir com a constelação, naves ou produtos de software com o nome Orion.
+
+desde 199 € — preço de lançamento
 
 ### Serviços
 - **Websites e landing pages** — Websites rápidos e com design à medida que transformam visitantes em chamadas, reservas e vendas. Sem templates — cada detalhe criado para a sua marca.
@@ -63,38 +67,40 @@ ORION é o estúdio de web design, desenvolvimento, SEO/GEO e cloud AWS de Oleh 
 1. **Conversa inicial** — Uma chamada curta para perceber o seu negócio, os seus objetivos e quem são os seus clientes.
 2. **Estratégia e design** — Estrutura, textos e um conceito de design único — aprova tudo antes de qualquer linha de código.
 3. **Desenvolvimento** — Um site rápido, responsivo e pronto para SEO. Acompanha o progresso num link de pré-visualização.
-4. **Lançamento** — Domínio, alojamento, analítica, Google Maps e Search Console — tudo configurado por mim.
+4. **Lançamento** — Domínio, alojamento, analítica, Google Maps e Search Console — tudo configurado por nós.
 5. **Crescimento** — SEO, anúncios e atualizações para continuar a trazer novos clientes todos os meses.
 
 ### FAQ
 **O que é a ORION?**
-ORION é a marca de Oleh Ivanytskyi, programador full-stack e arquiteto cloud AWS na Madeira, Portugal, que desenha e desenvolve websites, aplicações web e sistemas cloud para empresas na Madeira e em todo o mundo. O nome vem da constelação de Orion — visível de todos os cantos da Terra, tal como as marcas que ajudo a brilhar.
+A ORION (ORION Web Studio) é um estúdio de design e desenvolvimento web no Funchal, Madeira, Portugal. Desenhamos e desenvolvemos websites, lojas online, aplicações web e sistemas cloud AWS para empresas na Madeira e em todo o mundo. O estúdio tem 13 anos de experiência e é liderado por um AWS Certified Solutions Architect. O nome vem da constelação de Orion — visível de todos os cantos da Terra, tal como as marcas que ajudamos a brilhar.
 
-**Trabalha apenas com empresas da Madeira?**
-Não. Trabalho remotamente com clientes em Portugal, na Europa e em todo o mundo. Na Madeira também podemos reunir pessoalmente.
+**A ORION trabalha apenas com empresas da Madeira?**
+Não. Trabalhamos remotamente com clientes em Portugal, na Europa e em todo o mundo. Na Madeira também podemos reunir pessoalmente.
 
 **Quanto tempo demora a criar um website?**
 Um website empresarial ou landing page demora normalmente 1 a 3 semanas, da primeira conversa ao lançamento. Aplicações web e lojas online são planeadas individualmente.
 
 **Quanto custa um website?**
-Cada projeto é orçamentado individualmente depois de uma conversa curta. Recebe um preço fixo antes de começarmos — sem custos escondidos.
+Os websites começam nos 199 € — preço de lançamento para novos clientes. O preço fixo exato é acordado depois de uma conversa curta, antes de começarmos — sem custos escondidos. Lojas online, aplicações web e projetos cloud são orçamentados individualmente.
 
 **O que é GEO e porque é importante para o meu negócio?**
-GEO (Generative Engine Optimization) prepara o seu site para que assistentes de IA como o ChatGPT, o Gemini e o Perplexity entendam e recomendem o seu negócio. Adiciono dados estruturados, respostas claras e os sinais técnicos em que a pesquisa com IA se baseia.
+GEO (Generative Engine Optimization) prepara o seu site para que assistentes de IA como o ChatGPT, o Gemini e o Perplexity entendam e recomendem o seu negócio. Adicionamos dados estruturados, respostas claras e os sinais técnicos em que a pesquisa com IA se baseia.
 
 **O meu site pode ter várias línguas?**
-Sim. Crio sites multilingues em português, inglês, alemão, espanhol, italiano, francês e ucraniano. Cada língua tem a sua própria página com tags hreflang corretas, para que o Google e os assistentes de IA mostrem a versão certa a cada visitante.
+Sim. Criamos sites multilingues em português, inglês, alemão, espanhol, italiano, francês, ucraniano e outras línguas. Cada língua tem a sua própria página com tags hreflang corretas, para que o Google e os assistentes de IA mostrem a versão certa a cada visitante.
 
-**Pode tratar do alojamento, do domínio e das atualizações?**
-Sim. Domínio, alojamento, SSL, cópias de segurança, analítica e atualizações contínuas — trato de tudo para que se possa focar no seu negócio.
+**A ORION pode tratar do alojamento, do domínio e das atualizações?**
+Sim. Domínio, alojamento, SSL, cópias de segurança, analítica e atualizações contínuas — tratamos de tudo para que se possa focar no seu negócio.
 
-Keywords: criação de sites Madeira, web design Funchal, programador web Madeira, empresa de websites Funchal, SEO Madeira, SEO local Funchal, Perfil da Empresa no Google Madeira, loja online Madeira, site para restaurante Madeira, site para alojamento local Madeira, desenvolvimento web Portugal, consultor cloud AWS Portugal, otimização para pesquisa com IA (GEO)
+Keywords: criação de sites Madeira, web design Funchal, estúdio web Madeira, agência de web design Funchal, empresa de websites Funchal, SEO Madeira, SEO local Funchal, Perfil da Empresa no Google Madeira, loja online Madeira, site para restaurante Madeira, site para alojamento local Madeira, desenvolvimento web Portugal, consultor cloud AWS Portugal, otimização para pesquisa com IA (GEO)
 
 ## Українська — https://nexgen-fullstack.github.io/orion/ua/
 
-> Олег Іваницький (ORION) — full-stack розробник і архітектор AWS-хмари на Мадейрі (Португалія) з досвідом понад 7 років у створенні сайтів, вебзастосунків, SEO/GEO та хмарних систем.
+> ORION Web Studio — студія веб-дизайну, розробки, SEO/GEO та хмари AWS у Фуншалі (Мадейра, Португалія) з досвідом 13 років (з 2013), якою керує сертифікований AWS Solutions Architect – Associate.
 
-ORION — студія веб-дизайну, розробки, SEO/GEO та хмари AWS Олега Іваницького з Мадейри (Португалія).
+ORION Web Studio (orionstudio.io) — студія веб-дизайну, розробки, SEO/GEO та хмари AWS у Фуншалі (Мадейра, Португалія); не плутати із сузір'ям, космічними кораблями чи програмами з назвою Orion.
+
+від 199 € — стартова ціна
 
 ### Послуги
 - **Сайти та лендинги** — Швидкі сайти з унікальним дизайном, що перетворюють відвідувачів на дзвінки, бронювання і продажі. Без шаблонів — кожна деталь під ваш бренд.
@@ -113,33 +119,35 @@ ORION — студія веб-дизайну, розробки, SEO/GEO та х�
 
 ### FAQ
 **Що таке ORION?**
-ORION — бренд Олега Іваницького, full-stack розробника та архітектора AWS-хмари з Мадейри (Португалія), який проєктує і створює сайти, вебзастосунки та хмарні системи для бізнесу на Мадейрі й у всьому світі. Назва походить від сузір'я Оріон — його видно з будь-якого куточка Землі, як і бренди, яким я допомагаю сяяти.
+ORION (ORION Web Studio) — студія веб-дизайну та розробки у Фуншалі, Мадейра, Португалія. Ми проєктуємо і створюємо сайти, інтернет-магазини, вебзастосунки та хмарні системи AWS для бізнесу на Мадейрі й у всьому світі. Студія має 13 років досвіду, нею керує сертифікований AWS Solutions Architect. Назва походить від сузір'я Оріон — його видно з будь-якого куточка Землі, як і бренди, яким ми допомагаємо сяяти.
 
 **Ви працюєте лише з бізнесом на Мадейрі?**
-Ні. Працюю віддалено з клієнтами з Португалії, Європи та всього світу. На Мадейрі можемо зустрітися особисто.
+Ні. Ми працюємо віддалено з клієнтами з Португалії, Європи та всього світу. На Мадейрі можемо зустрітися особисто.
 
 **Скільки часу займає створення сайту?**
 Сайт для бізнесу чи лендинг зазвичай займає 1–3 тижні від першої розмови до запуску. Вебзастосунки та інтернет-магазини плануються індивідуально.
 
 **Скільки коштує сайт?**
-Кожен проєкт оцінюється індивідуально після короткої розмови. Ви отримуєте фіксовану ціну до початку роботи — без прихованих платежів.
+Сайти — від 199 € (стартова ціна для нових клієнтів). Точну фіксовану ціну погоджуємо після короткої розмови, до початку роботи — без прихованих платежів. Інтернет-магазини, вебзастосунки та хмарні проєкти оцінюються індивідуально.
 
 **Що таке GEO і навіщо воно бізнесу?**
-GEO (Generative Engine Optimization) — це підготовка сайту, щоб ШІ-асистенти на кшталт ChatGPT, Gemini і Perplexity розуміли та рекомендували ваш бізнес. Я додаю мікророзмітку, чіткі відповіді та технічні сигнали, на які спирається пошук зі ШІ.
+GEO (Generative Engine Optimization) — це підготовка сайту, щоб ШІ-асистенти на кшталт ChatGPT, Gemini і Perplexity розуміли та рекомендували ваш бізнес. Ми додаємо мікророзмітку, чіткі відповіді та технічні сигнали, на які спирається пошук зі ШІ.
 
 **Чи може мій сайт бути кількома мовами?**
-Так. Я створюю багатомовні сайти англійською, португальською, німецькою, іспанською, італійською, французькою та українською. Кожна мова має окрему сторінку з правильними тегами hreflang, тож Google і ШІ-асистенти показують кожному відвідувачу потрібну версію.
+Так. Ми створюємо багатомовні сайти англійською, португальською, німецькою, іспанською, італійською, французькою, українською та іншими мовами. Кожна мова має окрему сторінку з правильними тегами hreflang, тож Google і ШІ-асистенти показують кожному відвідувачу потрібну версію.
 
 **Ви можете взяти на себе хостинг, домен і підтримку?**
-Так. Домен, хостинг, SSL, резервні копії, аналітику й регулярні оновлення можу взяти на себе, щоб ви зосередилися на бізнесі.
+Так. Домен, хостинг, SSL, резервні копії, аналітику й регулярні оновлення можемо взяти на себе, щоб ви зосередилися на бізнесі.
 
-Keywords: створення сайтів Мадейра, розробка сайтів Португалія, веб-дизайнер Португалія, український розробник у Португалії, SEO просування Португалія, локальне SEO, Google Maps для бізнесу, інтернет-магазин під ключ, багатомовний сайт, архітектор AWS, GEO оптимізація під ШІ-пошук
+Keywords: створення сайтів Мадейра, розробка сайтів Португалія, веб-дизайнер Португалія, українська вебстудія в Португалії, вебстудія Мадейра, SEO просування Португалія, локальне SEO, Google Maps для бізнесу, інтернет-магазин під ключ, багатомовний сайт, архітектор AWS, GEO оптимізація під ШІ-пошук
 
 ## Deutsch — https://nexgen-fullstack.github.io/orion/de/
 
-> Oleh Ivanytskyi (ORION) ist ein Full-Stack-Entwickler und AWS-Cloud-Architekt auf Madeira, Portugal, mit über 7 Jahren Erfahrung in Websites, Web-Apps, SEO/GEO und Cloud-Systemen.
+> ORION Web Studio ist ein Studio für Webdesign, Entwicklung, SEO/GEO und AWS-Cloud in Funchal, Madeira, Portugal, mit 13 Jahren Erfahrung (seit 2013), geleitet von einem AWS Certified Solutions Architect – Associate.
 
-ORION ist das Studio für Webdesign, Entwicklung, SEO/GEO und AWS-Cloud von Oleh Ivanytskyi auf Madeira, Portugal.
+ORION Web Studio (orionstudio.io) ist ein Studio für Webdesign, Entwicklung, SEO/GEO und AWS-Cloud mit Sitz in Funchal, Madeira, Portugal — nicht zu verwechseln mit dem Sternbild, Raumschiffen oder Softwareprodukten namens Orion.
+
+ab 199 € — Einführungspreis
 
 ### Leistungen
 - **Websites & Landingpages** — Individuell gestaltete, blitzschnelle Websites, die Besucher in Anrufe, Buchungen und Verkäufe verwandeln. Keine Vorlagen — jedes Detail für Ihre Marke.
@@ -158,33 +166,35 @@ ORION ist das Studio für Webdesign, Entwicklung, SEO/GEO und AWS-Cloud von Oleh
 
 ### FAQ
 **Was ist ORION?**
-ORION ist die Marke von Oleh Ivanytskyi, einem Full-Stack-Entwickler und AWS-Cloud-Architekten auf Madeira, Portugal, der Websites, Web-Apps und Cloud-Systeme für Unternehmen auf Madeira und weltweit gestaltet und baut. Der Name stammt vom Sternbild Orion — sichtbar aus jedem Winkel der Erde, genau wie die Marken, denen ich zum Strahlen verhelfe.
+ORION (ORION Web Studio) ist ein Studio für Webdesign und Webentwicklung in Funchal, Madeira, Portugal. Wir gestalten und bauen Websites, Onlineshops, Web-Apps und AWS-Cloud-Systeme für Unternehmen auf Madeira und weltweit. Das Studio hat 13 Jahre Erfahrung und wird von einem AWS Certified Solutions Architect geleitet. Der Name stammt vom Sternbild Orion — sichtbar aus jedem Winkel der Erde, genau wie die Marken, denen wir zum Strahlen verhelfen.
 
 **Arbeiten Sie nur mit Unternehmen auf Madeira?**
-Nein. Ich arbeite remote mit Kunden in Portugal, Europa und weltweit. Auf Madeira können wir uns auch persönlich treffen.
+Nein. Wir arbeiten remote mit Kunden in Portugal, Europa und weltweit. Auf Madeira können wir uns auch persönlich treffen.
 
 **Wie lange dauert die Erstellung einer Website?**
 Eine Unternehmenswebsite oder Landingpage dauert meist 1–3 Wochen vom ersten Gespräch bis zum Start. Web-Apps und Onlineshops werden individuell geplant.
 
 **Was kostet eine Website?**
-Jedes Projekt wird nach einem kurzen Gespräch individuell kalkuliert. Sie erhalten vor Arbeitsbeginn einen Festpreis — ohne versteckte Kosten.
+Websites gibt es ab 199 € — ein Einführungspreis für neue Kunden. Den genauen Festpreis vereinbaren wir nach einem kurzen Gespräch, vor Arbeitsbeginn — ohne versteckte Kosten. Onlineshops, Web-Apps und Cloud-Projekte werden individuell kalkuliert.
 
 **Was ist GEO und warum braucht mein Unternehmen es?**
-GEO (Generative Engine Optimization) bereitet Ihre Website so vor, dass KI-Assistenten wie ChatGPT, Gemini und Perplexity Ihr Unternehmen verstehen und empfehlen. Ich ergänze strukturierte Daten, klare Antworten und die technischen Signale, auf die KI-Suche setzt.
+GEO (Generative Engine Optimization) bereitet Ihre Website so vor, dass KI-Assistenten wie ChatGPT, Gemini und Perplexity Ihr Unternehmen verstehen und empfehlen. Wir ergänzen strukturierte Daten, klare Antworten und die technischen Signale, auf die KI-Suche setzt.
 
 **Kann meine Website mehrere Sprachen haben?**
-Ja. Ich baue mehrsprachige Websites auf Englisch, Portugiesisch, Deutsch, Spanisch, Italienisch, Französisch und Ukrainisch. Jede Sprache bekommt eine eigene Seite mit korrekten hreflang-Tags, damit Google und KI-Assistenten jedem Besucher die richtige Version zeigen.
+Ja. Wir bauen mehrsprachige Websites auf Englisch, Portugiesisch, Deutsch, Spanisch, Italienisch, Französisch, Ukrainisch und in weiteren Sprachen. Jede Sprache bekommt eine eigene Seite mit korrekten hreflang-Tags, damit Google und KI-Assistenten jedem Besucher die richtige Version zeigen.
 
 **Kümmern Sie sich um Hosting, Domain und Updates?**
 Ja. Domain, Hosting, SSL, Backups, Analytics und laufende Updates können komplett für Sie übernommen werden, damit Sie sich auf Ihr Geschäft konzentrieren können.
 
-Keywords: Webdesign Madeira, Website erstellen lassen Madeira, Webentwickler Funchal, Webdesigner Portugal, SEO Madeira, lokales SEO Funchal, Google Unternehmensprofil Madeira, Website für Ferienwohnung Madeira, Hotel-Website Madeira, Onlineshop Portugal, mehrsprachige Website, AWS-Cloud-Architekt Portugal, GEO Optimierung für KI-Suche
+Keywords: Webdesign Madeira, Website erstellen lassen Madeira, Webstudio Madeira, Webdesign-Agentur Funchal, Webdesigner Portugal, SEO Madeira, lokales SEO Funchal, Google Unternehmensprofil Madeira, Website für Ferienwohnung Madeira, Hotel-Website Madeira, Onlineshop Portugal, mehrsprachige Website, AWS-Cloud-Architekt Portugal, GEO Optimierung für KI-Suche
 
 ## Español — https://nexgen-fullstack.github.io/orion/es/
 
-> Oleh Ivanytskyi (ORION) es un desarrollador full-stack y arquitecto cloud AWS en Madeira, Portugal, con más de 7 años de experiencia creando webs, aplicaciones web, SEO/GEO y sistemas en la nube.
+> ORION Web Studio es un estudio de diseño web, desarrollo, SEO/GEO y nube AWS en Funchal, Madeira, Portugal, con 13 años de experiencia (desde 2013), dirigido por un AWS Certified Solutions Architect – Associate.
 
-ORION es el estudio de diseño web, desarrollo, SEO/GEO y nube AWS de Oleh Ivanytskyi, con sede en Madeira, Portugal.
+ORION Web Studio (orionstudio.io) es un estudio de diseño web, desarrollo, SEO/GEO y nube AWS con sede en Funchal, Madeira, Portugal — no confundir con la constelación, naves espaciales o productos de software llamados Orion.
+
+desde 199 € — precio de lanzamiento
 
 ### Servicios
 - **Webs y landing pages** — Webs a medida y ultrarrápidas que convierten visitas en llamadas, reservas y ventas. Sin plantillas — cada detalle pensado para tu marca.
@@ -198,38 +208,40 @@ ORION es el estudio de diseño web, desarrollo, SEO/GEO y nube AWS de Oleh Ivany
 1. **Llamada inicial** — Una breve llamada para entender tu negocio, tus objetivos y quiénes son tus clientes.
 2. **Estrategia y diseño** — Estructura, textos y un concepto de diseño único — lo apruebas antes de escribir una sola línea de código.
 3. **Desarrollo** — Una web rápida, adaptable y lista para SEO. Sigues el avance en un enlace de vista previa en vivo.
-4. **Lanzamiento** — Dominio, hosting, analítica, Google Maps y Search Console — todo configurado por mí.
+4. **Lanzamiento** — Dominio, hosting, analítica, Google Maps y Search Console — todo configurado por nosotros.
 5. **Crecimiento** — SEO, publicidad y actualizaciones que traen nuevos clientes cada mes.
 
 ### FAQ
 **¿Qué es ORION?**
-ORION es la marca de Oleh Ivanytskyi, desarrollador full-stack y arquitecto cloud AWS con base en Madeira, Portugal, que diseña y crea webs, aplicaciones web y sistemas en la nube para negocios en Madeira y en todo el mundo. El nombre viene de la constelación de Orión — visible desde cualquier rincón de la Tierra, como las marcas a las que ayudo a brillar.
+ORION (ORION Web Studio) es un estudio de diseño y desarrollo web en Funchal, Madeira, Portugal. Diseñamos y creamos webs, tiendas online, aplicaciones web y sistemas en la nube de AWS para negocios en Madeira y en todo el mundo. El estudio tiene 13 años de experiencia y lo dirige un AWS Certified Solutions Architect. El nombre viene de la constelación de Orión — visible desde cualquier rincón de la Tierra, como las marcas a las que ayudamos a brillar.
 
-**¿Solo trabajas con negocios de Madeira?**
-No. Trabajo en remoto con clientes de Portugal, Europa y todo el mundo. En Madeira también podemos reunirnos en persona.
+**¿ORION trabaja solo con negocios de Madeira?**
+No. Trabajamos en remoto con clientes de Portugal, Europa y todo el mundo. En Madeira también podemos reunirnos en persona.
 
 **¿Cuánto se tarda en hacer una web?**
 Una web de empresa o landing page suele llevar de 1 a 3 semanas desde la primera llamada hasta el lanzamiento. Las aplicaciones web y tiendas online se planifican de forma individual.
 
 **¿Cuánto cuesta una web?**
-Cada proyecto se presupuesta de forma individual tras una breve llamada. Recibes un precio cerrado antes de empezar — sin costes ocultos.
+Las webs empiezan desde 199 € — precio de lanzamiento para nuevos clientes. El precio cerrado exacto se acuerda tras una breve llamada, antes de empezar — sin costes ocultos. Las tiendas online, aplicaciones web y proyectos cloud se presupuestan de forma individual.
 
 **¿Qué es el GEO y por qué lo necesita mi negocio?**
-El GEO (Generative Engine Optimization) prepara tu web para que asistentes de IA como ChatGPT, Gemini y Perplexity entiendan y recomienden tu negocio. Añado datos estructurados, respuestas claras y las señales técnicas en las que se basa la búsqueda con IA.
+El GEO (Generative Engine Optimization) prepara tu web para que asistentes de IA como ChatGPT, Gemini y Perplexity entiendan y recomienden tu negocio. Añadimos datos estructurados, respuestas claras y las señales técnicas en las que se basa la búsqueda con IA.
 
 **¿Mi web puede estar en varios idiomas?**
-Sí. Creo webs multilingües en inglés, portugués, alemán, español, italiano, francés y ucraniano. Cada idioma tiene su propia página con etiquetas hreflang correctas, para que Google y los asistentes de IA muestren a cada visitante la versión adecuada.
+Sí. Creamos webs multilingües en inglés, portugués, alemán, español, italiano, francés, ucraniano y otros idiomas. Cada idioma tiene su propia página con etiquetas hreflang correctas, para que Google y los asistentes de IA muestren a cada visitante la versión adecuada.
 
-**¿Te encargas del hosting, el dominio y las actualizaciones?**
-Sí. Dominio, hosting, SSL, copias de seguridad, analítica y actualizaciones pueden quedar en mis manos, para que tú te centres en tu negocio.
+**¿ORION se encarga del hosting, el dominio y las actualizaciones?**
+Sí. Dominio, hosting, SSL, copias de seguridad, analítica y actualizaciones pueden quedar en nuestras manos, para que tú te centres en tu negocio.
 
-Keywords: diseño web Madeira, desarrollador web Funchal, crear página web Madeira, diseñador web Portugal, SEO Madeira, SEO local Funchal, Perfil de Empresa de Google Madeira, tienda online Madeira, web para hotel en Madeira, web multilingüe, arquitecto cloud AWS Portugal, GEO optimización para búsqueda con IA
+Keywords: diseño web Madeira, estudio web Madeira, agencia de diseño web Funchal, crear página web Madeira, diseñador web Portugal, SEO Madeira, SEO local Funchal, Perfil de Empresa de Google Madeira, tienda online Madeira, web para hotel en Madeira, web multilingüe, arquitecto cloud AWS Portugal, GEO optimización para búsqueda con IA
 
 ## Italiano — https://nexgen-fullstack.github.io/orion/it/
 
-> Oleh Ivanytskyi (ORION) è uno sviluppatore full-stack e architetto cloud AWS a Madeira, Portogallo, con oltre 7 anni di esperienza in siti web, web app, SEO/GEO e sistemi cloud.
+> ORION Web Studio è uno studio di web design, sviluppo, SEO/GEO e cloud AWS a Funchal, Madeira, Portogallo, con 13 anni di esperienza (dal 2013), guidato da un AWS Certified Solutions Architect – Associate.
 
-ORION è lo studio di web design, sviluppo, SEO/GEO e cloud AWS di Oleh Ivanytskyi, con sede a Madeira, Portogallo.
+ORION Web Studio (orionstudio.io) è uno studio di web design, sviluppo, SEO/GEO e cloud AWS con sede a Funchal, Madeira, Portogallo — da non confondere con la costellazione, i veicoli spaziali o i software chiamati Orion.
+
+da 199 € — prezzo di lancio
 
 ### Servizi
 - **Siti web e landing page** — Siti su misura e velocissimi che trasformano i visitatori in chiamate, prenotazioni e vendite. Niente template — ogni dettaglio pensato per il tuo brand.
@@ -248,33 +260,35 @@ ORION è lo studio di web design, sviluppo, SEO/GEO e cloud AWS di Oleh Ivanytsk
 
 ### FAQ
 **Che cos'è ORION?**
-ORION è il brand di Oleh Ivanytskyi, sviluppatore full-stack e architetto cloud AWS con base a Madeira, Portogallo, che progetta e realizza siti web, web app e sistemi cloud per attività a Madeira e in tutto il mondo. Il nome viene dalla costellazione di Orione — visibile da ogni angolo della Terra, proprio come i brand che aiuto a brillare.
+ORION (ORION Web Studio) è uno studio di web design e sviluppo a Funchal, Madeira, Portogallo. Progettiamo e realizziamo siti web, negozi online, web app e sistemi cloud AWS per attività a Madeira e in tutto il mondo. Lo studio ha 13 anni di esperienza ed è guidato da un AWS Certified Solutions Architect. Il nome viene dalla costellazione di Orione — visibile da ogni angolo della Terra, proprio come i brand che aiutiamo a brillare.
 
-**Lavori solo con attività di Madeira?**
-No. Lavoro da remoto con clienti in Portogallo, in Europa e in tutto il mondo. A Madeira possiamo anche incontrarci di persona.
+**ORION lavora solo con attività di Madeira?**
+No. Lavoriamo da remoto con clienti in Portogallo, in Europa e in tutto il mondo. A Madeira possiamo anche incontrarci di persona.
 
 **Quanto tempo serve per realizzare un sito?**
 Un sito aziendale o una landing page richiedono di solito 1–3 settimane dalla prima chiamata al lancio. Web app e negozi online si pianificano su misura.
 
 **Quanto costa un sito web?**
-Ogni progetto viene preventivato su misura dopo una breve chiamata. Ricevi un prezzo fisso prima di iniziare — senza costi nascosti.
+I siti web partono da 199 € — prezzo di lancio per i nuovi clienti. Il prezzo fisso esatto si concorda dopo una breve chiamata, prima di iniziare — senza costi nascosti. Negozi online, web app e progetti cloud vengono preventivati su misura.
 
 **Cos'è il GEO e perché serve alla mia attività?**
-Il GEO (Generative Engine Optimization) prepara il tuo sito affinché assistenti IA come ChatGPT, Gemini e Perplexity capiscano e consiglino la tua attività. Aggiungo dati strutturati, risposte chiare e i segnali tecnici su cui si basa la ricerca con l'IA.
+Il GEO (Generative Engine Optimization) prepara il tuo sito affinché assistenti IA come ChatGPT, Gemini e Perplexity capiscano e consiglino la tua attività. Aggiungiamo dati strutturati, risposte chiare e i segnali tecnici su cui si basa la ricerca con l'IA.
 
 **Il mio sito può essere in più lingue?**
-Sì. Realizzo siti multilingue in inglese, portoghese, tedesco, spagnolo, italiano, francese e ucraino. Ogni lingua ha la sua pagina con tag hreflang corretti, così Google e gli assistenti IA mostrano a ogni visitatore la versione giusta.
+Sì. Realizziamo siti multilingue in inglese, portoghese, tedesco, spagnolo, italiano, francese, ucraino e altre lingue. Ogni lingua ha la sua pagina con tag hreflang corretti, così Google e gli assistenti IA mostrano a ogni visitatore la versione giusta.
 
-**Ti occupi di hosting, dominio e aggiornamenti?**
-Sì. Dominio, hosting, SSL, backup, analytics e aggiornamenti possono essere gestiti interamente da me, così tu ti concentri sulla tua attività.
+**ORION si occupa di hosting, dominio e aggiornamenti?**
+Sì. Dominio, hosting, SSL, backup, analytics e aggiornamenti possono essere gestiti interamente da noi, così tu ti concentri sulla tua attività.
 
-Keywords: web design Madeira, creazione siti web Madeira, sviluppatore web Funchal, web designer Portogallo, SEO Madeira, SEO locale Funchal, Profilo dell'attività su Google Madeira, negozio online Madeira, sito per hotel a Madeira, sito multilingue, architetto cloud AWS Portogallo, GEO ottimizzazione per la ricerca con IA
+Keywords: web design Madeira, creazione siti web Madeira, studio web Madeira, agenzia web design Funchal, web designer Portogallo, SEO Madeira, SEO locale Funchal, Profilo dell'attività su Google Madeira, negozio online Madeira, sito per hotel a Madeira, sito multilingue, architetto cloud AWS Portogallo, GEO ottimizzazione per la ricerca con IA
 
 ## Français — https://nexgen-fullstack.github.io/orion/fr/
 
-> Oleh Ivanytskyi (ORION) est un développeur full-stack et architecte cloud AWS à Madère, au Portugal, avec plus de 7 ans d'expérience dans les sites web, les applications web, le SEO/GEO et les systèmes cloud.
+> ORION Web Studio est un studio de conception web, développement, SEO/GEO et cloud AWS à Funchal, Madère, Portugal, avec 13 ans d'expérience (depuis 2013), dirigé par un AWS Certified Solutions Architect – Associate.
 
-ORION est le studio de conception web, développement, SEO/GEO et cloud AWS d'Oleh Ivanytskyi, basé à Madère, au Portugal.
+ORION Web Studio (orionstudio.io) est un studio de conception web, développement, SEO/GEO et cloud AWS basé à Funchal, Madère, Portugal — à ne pas confondre avec la constellation, les vaisseaux spatiaux ou les logiciels nommés Orion.
+
+dès 199 € — prix de lancement
 
 ### Services
 - **Sites web et landing pages** — Des sites sur mesure ultra-rapides qui transforment les visiteurs en appels, réservations et ventes. Aucun template — chaque détail pensé pour votre marque.
@@ -293,33 +307,35 @@ ORION est le studio de conception web, développement, SEO/GEO et cloud AWS d'Ol
 
 ### FAQ
 **Qu'est-ce que ORION ?**
-ORION est la marque d'Oleh Ivanytskyi, développeur full-stack et architecte cloud AWS basé à Madère, au Portugal, qui conçoit et développe des sites web, des applications web et des systèmes cloud pour des entreprises à Madère et dans le monde entier. Le nom vient de la constellation d'Orion — visible depuis chaque coin de la Terre, comme les marques que j'aide à briller.
+ORION (ORION Web Studio) est un studio de conception et de développement web à Funchal, Madère, Portugal. Nous concevons et développons des sites web, des boutiques en ligne, des applications web et des systèmes cloud AWS pour des entreprises à Madère et dans le monde entier. Le studio a 13 ans d'expérience et il est dirigé par un AWS Certified Solutions Architect. Le nom vient de la constellation d'Orion — visible depuis chaque coin de la Terre, comme les marques que nous aidons à briller.
 
 **Travaillez-vous uniquement avec des entreprises de Madère ?**
-Non. Je travaille à distance avec des clients au Portugal, en Europe et dans le monde entier. À Madère, nous pouvons aussi nous rencontrer en personne.
+Non. Nous travaillons à distance avec des clients au Portugal, en Europe et dans le monde entier. À Madère, nous pouvons aussi nous rencontrer en personne.
 
 **Combien de temps faut-il pour créer un site ?**
 Un site vitrine ou une landing page prend généralement 1 à 3 semaines entre le premier appel et la mise en ligne. Les applications web et boutiques en ligne sont planifiées au cas par cas.
 
 **Combien coûte un site web ?**
-Chaque projet fait l'objet d'un devis personnalisé après un court échange. Vous obtenez un prix fixe avant le début du travail — sans frais cachés.
+Les sites web démarrent à partir de 199 € — un prix de lancement pour les nouveaux clients. Le prix fixe exact est convenu après un court échange, avant le début du travail — sans frais cachés. Boutiques en ligne, applications web et projets cloud font l'objet d'un devis personnalisé.
 
 **Qu'est-ce que le GEO et pourquoi mon entreprise en a-t-elle besoin ?**
-Le GEO (Generative Engine Optimization) prépare votre site pour que les assistants IA comme ChatGPT, Gemini et Perplexity comprennent et recommandent votre entreprise. J'ajoute des données structurées, des réponses claires et les signaux techniques sur lesquels s'appuie la recherche par IA.
+Le GEO (Generative Engine Optimization) prépare votre site pour que les assistants IA comme ChatGPT, Gemini et Perplexity comprennent et recommandent votre entreprise. Nous ajoutons des données structurées, des réponses claires et les signaux techniques sur lesquels s'appuie la recherche par IA.
 
 **Mon site peut-il être en plusieurs langues ?**
-Oui. Je crée des sites multilingues en anglais, portugais, allemand, espagnol, italien, français et ukrainien. Chaque langue a sa propre page avec des balises hreflang correctes, afin que Google et les assistants IA montrent à chaque visiteur la bonne version.
+Oui. Nous créons des sites multilingues en anglais, portugais, allemand, espagnol, italien, français, ukrainien et d'autres langues. Chaque langue a sa propre page avec des balises hreflang correctes, afin que Google et les assistants IA montrent à chaque visiteur la bonne version.
 
 **Pouvez-vous gérer l'hébergement, le domaine et les mises à jour ?**
 Oui. Nom de domaine, hébergement, SSL, sauvegardes, analytics et mises à jour peuvent être entièrement pris en charge, pour que vous puissiez vous concentrer sur votre activité.
 
-Keywords: création de site web Madère, développeur web Funchal, webdesigner Madère, agence web Portugal, SEO Madère, référencement local Funchal, fiche d'établissement Google Madère, boutique en ligne Madère, site pour hôtel à Madère, site multilingue, architecte cloud AWS Portugal, GEO optimisation pour la recherche IA
+Keywords: création de site web Madère, studio web Madère, agence web Funchal, webdesigner Madère, agence web Portugal, SEO Madère, référencement local Funchal, fiche d'établissement Google Madère, boutique en ligne Madère, site pour hôtel à Madère, site multilingue, architecte cloud AWS Portugal, GEO optimisation pour la recherche IA
 
 ## Русский — https://nexgen-fullstack.github.io/orion/ru/
 
-> Олег Иваницкий (ORION) — full-stack разработчик и архитектор облака AWS на Мадейре (Португалия) с опытом более 7 лет в создании сайтов, веб-приложений, SEO/GEO и облачных систем.
+> ORION Web Studio — студия веб-дизайна, разработки, SEO/GEO и облака AWS в Фуншале (Мадейра, Португалия) с опытом 13 лет (с 2013), которой руководит сертифицированный AWS Solutions Architect – Associate.
 
-ORION — студия веб-дизайна, разработки, SEO/GEO и облака AWS Олега Иваницкого с Мадейры (Португалия).
+ORION Web Studio (orionstudio.io) — студия веб-дизайна, разработки, SEO/GEO и облака AWS в Фуншале (Мадейра, Португалия); не путать с созвездием, космическими кораблями или программами с названием Orion.
+
+от 199 € — стартовая цена
 
 ### Услуги
 - **Сайты и лендинги** — Быстрые сайты с уникальным дизайном, которые превращают посетителей в звонки, бронирования и продажи. Без шаблонов — каждая деталь под ваш бренд.
@@ -338,25 +354,25 @@ ORION — студия веб-дизайна, разработки, SEO/GEO и �
 
 ### FAQ
 **Что такое ORION?**
-ORION — бренд Олега Иваницкого, full-stack разработчика и архитектора облака AWS с Мадейры (Португалия), который проектирует и создаёт сайты, веб-приложения и облачные системы для бизнеса на Мадейре и по всему миру. Название происходит от созвездия Орион — его видно из любого уголка Земли, как и бренды, которым я помогаю сиять.
+ORION (ORION Web Studio) — студия веб-дизайна и разработки в Фуншале, Мадейра, Португалия. Мы проектируем и создаём сайты, интернет-магазины, веб-приложения и облачные системы AWS для бизнеса на Мадейре и по всему миру. У студии 13 лет опыта, ею руководит сертифицированный AWS Solutions Architect. Название происходит от созвездия Орион — его видно из любого уголка Земли, как и бренды, которым мы помогаем сиять.
 
 **Вы работаете только с бизнесом на Мадейре?**
-Нет. Работаю удалённо с клиентами из Португалии, Европы и всего мира. На Мадейре можем встретиться лично.
+Нет. Мы работаем удалённо с клиентами из Португалии, Европы и всего мира. На Мадейре можем встретиться лично.
 
 **Сколько времени занимает создание сайта?**
 Сайт для бизнеса или лендинг обычно занимает 1–3 недели от первого разговора до запуска. Веб-приложения и интернет-магазины планируются индивидуально.
 
 **Сколько стоит сайт?**
-Каждый проект оценивается индивидуально после короткого разговора. Вы получаете фиксированную цену до начала работы — без скрытых платежей.
+Сайты — от 199 € (стартовая цена для новых клиентов). Точную фиксированную цену согласуем после короткого разговора, до начала работы — без скрытых платежей. Интернет-магазины, веб-приложения и облачные проекты оцениваются индивидуально.
 
 **Что такое GEO и зачем оно бизнесу?**
-GEO (Generative Engine Optimization) — это подготовка сайта, чтобы ИИ-ассистенты вроде ChatGPT, Gemini и Perplexity понимали и рекомендовали ваш бизнес. Я добавляю микроразметку, чёткие ответы и технические сигналы, на которые опирается поиск с ИИ.
+GEO (Generative Engine Optimization) — это подготовка сайта, чтобы ИИ-ассистенты вроде ChatGPT, Gemini и Perplexity понимали и рекомендовали ваш бизнес. Мы добавляем микроразметку, чёткие ответы и технические сигналы, на которые опирается поиск с ИИ.
 
 **Может ли мой сайт быть на нескольких языках?**
-Да. Я создаю многоязычные сайты на английском, португальском, немецком, испанском, итальянском, французском, украинском и русском. У каждого языка своя страница с правильными тегами hreflang, поэтому Google и ИИ-ассистенты показывают каждому посетителю нужную версию.
+Да. Мы создаём многоязычные сайты на английском, португальском, немецком, испанском, итальянском, французском, украинском, русском и других языках. У каждого языка своя страница с правильными тегами hreflang, поэтому Google и ИИ-ассистенты показывают каждому посетителю нужную версию.
 
 **Вы можете взять на себя хостинг, домен и поддержку?**
-Да. Домен, хостинг, SSL, резервные копии, аналитику и регулярные обновления могу взять на себя, чтобы вы сосредоточились на бизнесе.
+Да. Домен, хостинг, SSL, резервные копии, аналитику и регулярные обновления можем взять на себя, чтобы вы сосредоточились на бизнесе.
 
-Keywords: создание сайтов Мадейра, разработка сайтов Португалия, веб-дизайнер Португалия, русскоязычный разработчик в Португалии, SEO продвижение Португалия, локальное SEO, Google Maps для бизнеса, интернет-магазин под ключ, многоязычный сайт, архитектор AWS, GEO оптимизация под ИИ-поиск
+Keywords: создание сайтов Мадейра, разработка сайтов Португалия, веб-дизайнер Португалия, русскоязычная веб-студия в Португалии, веб-студия Мадейра, SEO продвижение Португалия, локальное SEO, Google Maps для бизнеса, интернет-магазин под ключ, многоязычный сайт, архитектор AWS, GEO оптимизация под ИИ-поиск
 

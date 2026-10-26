@@ -1,3 +1,9 @@
 Moon (moon-lit.webp, moon-dark.webp): rendered by tools/moon_render.py from the CGI Moon Kit —
 NASA's Scientific Visualization Studio, https://svs.gsfc.nasa.gov/4720 (LRO LROC colour map, LOLA elevation).
 Concept-site photos: see work/CREDITS.txt
+
+saturn.webp, saturn-sm.webp — Saturn, Hubble Space Telescope (NASA image PIA03162, "A Change of Seasons on Saturn — October 2000").
+  Credit: NASA and The Hubble Heritage Team (STScI/AURA). Black sky made transparent.
+galaxy.webp, galaxy-sm.webp — Pinwheel Galaxy M101 (NASA image PIA15630, "Pinwheel Galaxy Rainbow").
+  Credit: NASA/JPL-Caltech/ESA/STScI/CXC. Cropped, faded at the rim, black sky made transparent.
+fonts/ — Unbounded, Manrope, JetBrains Mono (SIL Open Font License), served from this site.

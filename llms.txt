@@ -1,16 +1,17 @@
-# ORION — Oleh Ivanytskyi
+# ORION Web Studio
 
-> Oleh Ivanytskyi (ORION) is a full-stack developer and AWS cloud architect in Madeira, Portugal, with 7+ years of experience building websites, web apps, SEO/GEO and cloud systems. Brand: ORION (named after the Orion constellation, visible from every corner of the Earth). Serves businesses in Madeira, Portugal and worldwide.
+> ORION Web Studio is a web design, development, SEO/GEO and AWS cloud studio in Funchal, Madeira, Portugal, with 13 years of experience (since 2013), led by an AWS Certified Solutions Architect – Associate. Named after the Orion constellation, visible from every corner of the Earth. Serves businesses in Madeira, Portugal and worldwide.
 
 ## Key facts
-- Name: Oleh Ivanytskyi (Ukrainian: Олег Іваницький); brand / studio name: ORION
-- Role: full-stack developer, web designer and AWS cloud architect
-- Based in: Madeira, Portugal (works remotely worldwide; meets in person on Madeira)
-- Experience: 7+ years, 100+ projects delivered
-- Stack: React, Next.js, JavaScript, Python, Django, AWS (Lambda, EC2, S3, Kinesis, CloudWatch), Terraform
+- Name: ORION Web Studio (short: ORION); website: https://nexgen-fullstack.github.io/orion/
+- What: web design and development studio — websites, online stores, web apps, SEO & GEO, Google Maps, Google Ads, AWS cloud and automation
+- Based in: Funchal, Madeira, Portugal (works remotely worldwide; meets clients in person on Madeira)
+- Experience: since 2013 (13 years), 100+ projects delivered
+- Certifications: AWS Certified Solutions Architect – Associate (SAA-C03); AWS Certified Cloud Practitioner (held by the studio's lead architect)
+- Stack: React, Next.js, JavaScript, Python, Django, AWS (Lambda, EC2, S3, CloudFront, Kinesis, CloudWatch), Terraform
 - Marketing: SEO, GEO (Generative Engine Optimization), local SEO, Google Business Profile, Google Ads, link building
-- Contact: WhatsApp +351937146119 (https://wa.me/351937146119), Telegram @skytiger777 (https://t.me/skytiger777)
-- Pricing: fixed price quoted individually after a short call
+- Prices: websites from €199 (launch price for new clients); fixed price agreed before work starts; stores, web apps and cloud projects quoted individually
+- Contact: WhatsApp / Viber +351 927 582 627 (https://wa.me/351927582627), Telegram @OrionWebStudio (https://t.me/OrionWebStudio), email orion11studio@gmail.com
 - Languages of the site and of delivered websites: English, Português, Українська, Deutsch, Español, Italiano, Français, Русский
 
 ## Services
@@ -36,22 +37,22 @@
 
 ## FAQ
 ### What is ORION?
-ORION is the brand of Oleh Ivanytskyi, a full-stack developer and AWS cloud architect based in Madeira, Portugal, who designs and builds websites, web apps and cloud systems for businesses in Madeira and worldwide. The name comes from the Orion constellation — visible from every corner of the Earth, just like the brands I help to shine.
+ORION (ORION Web Studio) is a web design and development studio in Funchal, Madeira, Portugal. We design and build websites, online stores, web apps and AWS cloud systems for businesses in Madeira and worldwide. The studio has 13 years of experience and is led by an AWS Certified Solutions Architect. The name comes from the Orion constellation — visible from every corner of the Earth, just like the brands we help to shine.
 
 ### Do you only work with businesses in Madeira?
-No. I work remotely with clients across Portugal, Europe and worldwide. In Madeira we can also meet in person.
+No. We work remotely with clients across Portugal, Europe and worldwide. In Madeira we can also meet in person.
 
 ### How long does it take to build a website?
 A business website or landing page usually takes 1–3 weeks from the first call to launch. Web apps and online stores are planned individually.
 
 ### How much does a website cost?
-Every project is quoted individually after a short call. You get a fixed price before work starts — no hidden costs.
+Websites start from €199 — a launch price for new clients. The exact fixed price is agreed after a short call, before work starts — no hidden costs. Online stores, web apps and cloud projects are quoted individually.
 
 ### What is GEO and why does my business need it?
-GEO (Generative Engine Optimization) prepares your site so AI assistants like ChatGPT, Gemini and Perplexity understand and recommend your business. I add structured data, clear answers and the technical signals AI search relies on.
+GEO (Generative Engine Optimization) prepares your site so AI assistants like ChatGPT, Gemini and Perplexity understand and recommend your business. We add structured data, clear answers and the technical signals AI search relies on.
 
 ### Can my website be in several languages?
-Yes. I build multilingual websites in English, Portuguese, German, Spanish, Italian, French and Ukrainian. Each language gets its own page with correct hreflang tags, so Google and AI assistants show every visitor the right version.
+Yes. We build multilingual websites in English, Portuguese, German, Spanish, Italian, French, Ukrainian and other languages. Each language gets its own page with correct hreflang tags, so Google and AI assistants show every visitor the right version.
 
 ### Can you take care of hosting, domain and updates?
 Yes. Domain, hosting, SSL, backups, analytics and ongoing updates can all be handled for you, so you can focus on your business.
@@ -65,13 +66,18 @@ Yes. Domain, hosting, SSL, backups, analytics and ongoing updates can all be han
 - [Italiano](https://nexgen-fullstack.github.io/orion/it/)
 - [Français](https://nexgen-fullstack.github.io/orion/fr/)
 - [Русский](https://nexgen-fullstack.github.io/orion/ru/)
+- [Privacy Policy](https://nexgen-fullstack.github.io/orion/privacy/)
+- [Terms of Service](https://nexgen-fullstack.github.io/orion/terms/)
 
 ## Profiles
-- [LinkedIn](https://www.linkedin.com/in/oleh-ivanytskyi-59020a421/)
-- [Facebook](https://www.facebook.com/profile.php?id=61591835461533)
+- [Instagram](https://www.instagram.com/orion_w.e.b_studio.11/)
+- [Facebook](https://www.facebook.com/profile.php?id=61595881348084)
+- [YouTube](https://www.youtube.com/@Orion_Web_Studio)
+- [TikTok](https://www.tiktok.com/@orion_web_studio)
+- [Telegram](https://t.me/OrionWebStudio)
 
 ## Service area
-Funchal, Câmara de Lobos, Santa Cruz, Caniço, Machico, Ribeira Brava, Ponta do Sol, Calheta, São Vicente, Santana, Porto Moniz, Porto Santo — all of Madeira; Portugal; remote work worldwide.
+Funchal, Câmara de Lobos, Santa Cruz, Caniço, Machico, Ribeira Brava, Ponta do Sol, Calheta, São Vicente, Santana, Porto Moniz, Porto Santo — all of Madeira; Portugal; Europe; remote work worldwide.
 
 ## In other languages
 - English (en): ORION — web design, development, SEO/GEO, Google Maps, Google Ads and AWS cloud services in Madeira, Portugal, for clients worldwide. — https://nexgen-fullstack.github.io/orion/

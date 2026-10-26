@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ORION — Oleh Ivanytskyi · interactions
+   ORION Web Studio · interactions
    Vanilla JS + WebGL. Content works without JS; everything here is enhancement.
    ========================================================================== */
 (() => {
@@ -162,12 +162,19 @@
   safe('split', () => {
     $$('[data-split]').forEach(el => { split(el, el.dataset.split); io.observe(el); });
     $$('[data-reveal]').forEach(el => io.observe(el));
-    // long words (PT/UA) must never push giant headings past the screen edge
+    // long words (DE "Ausgewählte", ES "destacados", UA "працюємо") must never push giant headings past the
+    // section padding: the longest word is measured against the section's content width (a centred heading
+    // grows with its text, so its own scrollWidth never shows the overflow)
     const giants = $$('.h-giant, .contact__title');
     onLayout(() => giants.forEach(el => {
       el.style.fontSize = '';
-      const over = el.scrollWidth - el.clientWidth;
-      if (over > 1) el.style.fontSize = (parseFloat(getComputedStyle(el).fontSize) * el.clientWidth / el.scrollWidth * 0.98).toFixed(1) + 'px';
+      const box = el.closest('section') || el.parentElement;
+      const cs = getComputedStyle(box);
+      const room = (box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)) * 0.97;
+      let widest = 0;
+      el.querySelectorAll('.wd').forEach(w => { widest = Math.max(widest, w.getBoundingClientRect().width); });
+      if (!widest) widest = el.scrollWidth;
+      if (room > 0 && widest > room) el.style.fontSize = (parseFloat(getComputedStyle(el).fontSize) * room / widest).toFixed(1) + 'px';
     }));
   });
 
@@ -1988,7 +1995,7 @@ void main(){
       const who = (f.elements.namedItem('who').value || '').trim();
       const msg = (f.elements.namedItem('msg').value || '').trim();
       const needs = $$('input[name="need"]:checked', f).map(i => i.value);
-      let s = T.hi || 'Hi Oleh! ';
+      let s = T.hi || 'Hi ORION! ';
       if (who) s += (T.me || 'My name is {name}. ').replace('{name}', who);
       if (needs.length) s += (T.need || "I'm interested in: {list}. ").replace('{list}', needs.join(', '));
       if (msg) s += msg;

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://nexgen-fullstack.github.io/orion/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/"/>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/"/>
     <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/"/>
@@ -15,7 +15,7 @@
   </url>
   <url>
     <loc>https://nexgen-fullstack.github.io/orion/pt/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/"/>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/"/>
     <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/"/>
@@ -28,7 +28,7 @@
   </url>
   <url>
     <loc>https://nexgen-fullstack.github.io/orion/ua/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/"/>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/"/>
     <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/"/>
@@ -41,7 +41,7 @@
   </url>
   <url>
     <loc>https://nexgen-fullstack.github.io/orion/de/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/"/>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/"/>
     <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/"/>
@@ -54,7 +54,7 @@
   </url>
   <url>
     <loc>https://nexgen-fullstack.github.io/orion/es/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/"/>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/"/>
     <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/"/>
@@ -67,7 +67,7 @@
   </url>
   <url>
     <loc>https://nexgen-fullstack.github.io/orion/it/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/"/>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/"/>
     <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/"/>
@@ -80,7 +80,7 @@
   </url>
   <url>
     <loc>https://nexgen-fullstack.github.io/orion/fr/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/"/>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/"/>
     <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/"/>
@@ -93,7 +93,7 @@
   </url>
   <url>
     <loc>https://nexgen-fullstack.github.io/orion/ru/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/"/>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/"/>
     <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/"/>
@@ -103,5 +103,213 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/privacy/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/pt/privacy/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/ua/privacy/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/de/privacy/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/es/privacy/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/it/privacy/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/fr/privacy/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/ru/privacy/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/privacy/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/terms/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/terms/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/terms/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/terms/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/terms/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/terms/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/pt/terms/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/terms/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/terms/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/terms/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/terms/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/terms/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/ua/terms/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/terms/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/terms/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/terms/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/terms/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/terms/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/de/terms/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/terms/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/terms/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/terms/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/terms/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/terms/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/es/terms/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/terms/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/terms/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/terms/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/terms/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/terms/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/it/terms/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/terms/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/terms/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/terms/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/terms/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/terms/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/fr/terms/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/terms/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/terms/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/terms/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/terms/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/terms/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+  </url>
+  <url>
+    <loc>https://nexgen-fullstack.github.io/orion/ru/terms/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexgen-fullstack.github.io/orion/terms/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://nexgen-fullstack.github.io/orion/pt/terms/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://nexgen-fullstack.github.io/orion/ua/terms/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexgen-fullstack.github.io/orion/de/terms/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://nexgen-fullstack.github.io/orion/es/terms/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://nexgen-fullstack.github.io/orion/it/terms/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexgen-fullstack.github.io/orion/fr/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nexgen-fullstack.github.io/orion/ru/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nexgen-fullstack.github.io/orion/terms/"/>
   </url>
 </urlset>
