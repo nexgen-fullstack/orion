@@ -1569,3 +1569,12 @@ html.is-moving .step--cta::after, html.is-moving .card::before { animation-play-
 .place__links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 6px; }
 .place__links a { color: var(--ink); font-weight: 700; text-decoration: underline; text-decoration-color: rgba(143, 211, 255, .35); text-underline-offset: 3px; overflow-wrap: anywhere; }
 .place__links a:hover { text-decoration-color: currentColor; }
+
+/* ---------- footer: the giant ORION never covers the links under it; column titles read as titles ---------- */
+.footer__giant { pointer-events: none; }
+.footer__bottom { position: relative; z-index: 3; }
+.footer__bottom a, .footer__legal a { display: inline-block; padding: 8px 0; }
+.footer h3 { position: relative; display: inline-block; margin-bottom: 18px; padding-bottom: 10px; font-weight: 700; font-size: 12.5px; letter-spacing: .16em;
+  background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.footer h3::after { content: ""; position: absolute; left: 0; bottom: 0; width: 34px; height: 2px; border-radius: 2px; background: var(--grad); }
+.footer ul a { display: inline-block; padding: 3px 0; }
