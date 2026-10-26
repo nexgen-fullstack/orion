@@ -1,7 +1,7 @@
 /* ORION service worker — repeat visits load instantly.
    Pages: network first (a new version shows at once; the copy is only used offline).
    Static files (styles, scripts, images, fonts): served from the cache, refreshed in the background. */
-const V = '1793018287';
+const V = '1793019028';
 const STATIC = 'orion-static-1';
 const PAGES = 'orion-pages-1';
 
