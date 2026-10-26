@@ -11,7 +11,7 @@
 - Stack: React, Next.js, JavaScript, Python, Django, AWS (Lambda, EC2, S3, CloudFront, Kinesis, CloudWatch), Terraform
 - Marketing: SEO, GEO (Generative Engine Optimization), local SEO, Google Business Profile, Google Ads, link building
 - Prices: websites from €199 (launch price for new clients); fixed price agreed before work starts; stores, web apps and cloud projects quoted individually
-- Contact: WhatsApp / Viber +351 927 582 627 (https://wa.me/351927582627), Telegram @OrionWebStudio (https://t.me/OrionWebStudio), email orion11studio@gmail.com
+- Contact: WhatsApp / Viber +351 927 582 627 (https://wa.me/351927582627), Telegram @OrionWebStudio (https://t.me/OrionWebStudio), email connect@orionstudio.io
 - Languages of the site and of delivered websites: English, Português, Українська, Deutsch, Español, Italiano, Français, Русский
 
 ## Services
