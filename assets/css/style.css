@@ -1591,3 +1591,41 @@ html.is-moving .step--cta::after, html.is-moving .card::before { animation-play-
 }
 .rotator__word { --glow: drop-shadow(0 0 1px rgba(4, 5, 12, .9)) drop-shadow(0 0 8px rgba(255, 111, 174, .95)) drop-shadow(0 0 20px rgba(143, 211, 255, .8));
   background-image: linear-gradient(120deg, #c4ecff 0%, #d6cbff 45%, #ffc2de 100%); }
+
+/* ---------- sleeping sections (.is-asleep from JS, off screen): every decorative loop inside holds still.
+   Scroll-driven parts are left alone so they are already in place when the section scrolls back in. ---------- */
+/* only the looping decorations are listed (not every descendant), so waking a section restyles a handful of nodes
+   instead of the whole section — that restyle used to land exactly as the section scrolled in */
+.is-asleep :is(svg *, i, b, img, .galaxy, .cube, .moon__in, .ph__scr, .mini-phone, .mini-phone__feed, .tap, .map__pin, .ai-dot,
+  .cm__track, .btn, .pulse, .oclock, .hero__aurora, .vis, .term, .glint, .step__ico),
+.is-asleep :is(i, span, div, a, button, b)::before, .is-asleep :is(i, span, div, a, button, b)::after { animation-play-state: paused !important; }
+/* while the finger moves the page, the always-visible logo stars and the hero constellation hold still too —
+   SVG twinkles cost a layout pass every frame */
+html.is-moving :is(.lm-s, .ori__tw, .ori__spk, .ori__neb, .glint), html.is-moving .pulse::after, html.is-moving .fab__ico::after { animation-play-state: paused; }
+
+/* ---------- phones: the same picture, less work for the graphics chip ---------- */
+@media (hover: none) {
+  /* the aurora is made of soft radial gradients already; the 70px blur on top was re-computed every frame */
+  .hero__aurora { filter: none; opacity: .42; }
+  /* logo stars twinkle by brightness only — scaling an SVG circle re-ran SVG layout on every frame */
+  .lm-s { animation-name: lmTwSoft; }
+}
+@keyframes lmTwSoft { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+/* weaker phones (html.is-lite): no live background blur under fixed/moving layers — a denser tint instead */
+html.is-lite .nav::before { background: rgba(4, 5, 12, .9); -webkit-backdrop-filter: none; backdrop-filter: none; }
+html.is-lite .menu { background: rgba(5, 7, 20, .97); -webkit-backdrop-filter: none; backdrop-filter: none; }
+html.is-lite :is(.badge, .btn--ghost, .map__card, .cube b) { -webkit-backdrop-filter: none; backdrop-filter: none; }
+html.is-lite .hero__aurora i { animation: none; }
+
+/* ---------- work stack on the compositor (html.stack-sda is set by JS where scroll timelines exist) ---------- */
+html.stack-sda .stack { view-timeline: --stack block; }
+html.stack-sda .card:not(.is-last) { animation: stackScale linear both; animation-timeline: --stack; animation-range: contain var(--s0) contain 100%; }
+html.stack-sda .card:not(.is-last) > .card__shade { animation: stackShade linear both; animation-timeline: --stack; animation-range: contain var(--s0) contain 100%; }
+@keyframes stackScale { from { transform: none; } to { transform: scale(var(--sc)); } }
+@keyframes stackShade { from { opacity: 0; } to { opacity: .55; } }
+html.stack-sda .card.is-buried > .card__shade, html.stack-sda .card.is-off > .card__shade { animation-play-state: running !important; }
+@media (hover: none) {
+  /* hero star spikes pulse by brightness on phones (scaling an SVG path re-ran SVG layout every frame) */
+  .ori__st--hero .ori__spk { animation-name: spkSoft; }
+}
+@keyframes spkSoft { 50% { opacity: .55; } }

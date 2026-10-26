@@ -13,6 +13,10 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const SDA = !reduce && !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: scroll()'));
+  // weaker phones (few cores or little memory): same design, cheaper rendering — see html.is-lite in style.css.
+  // A phone that turns out slower than it claims is switched to lite later by the frame-rate check in 'calm'.
+  const lite = !fine && ((navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4);
+  if (lite) doc.classList.add('is-lite');
   let T = {};
   try { T = JSON.parse(($('#i18n') || {}).textContent || '{}'); } catch (e) { /* keep defaults */ }
 
@@ -734,7 +738,7 @@ void main(){
       return { name: c[0].toUpperCase(), tag: c[3] || '', prio: c[5] || 0, b, pts, dur: 1500 + om * 1500, on: false };
     });
 
-    let q = Math.min(window.devicePixelRatio || 1, fine ? 2 : 1.75);
+    let q = Math.min(window.devicePixelRatio || 1, fine ? 2 : lite ? 1.25 : 1.75);
     const fq = Math.min(window.devicePixelRatio || 1, 2);
     let size = 0;
     let rad = 0.66;
@@ -1799,8 +1803,19 @@ void main(){
         }
       }
     };
+    // where CSS scroll timelines exist the card shrink + shade run on the compositor (see .stack in style.css):
+    // they follow the finger exactly instead of trailing the scroll by a frame, which showed as a tremble on phones
+    if (SDA) {
+      cards.forEach((c, i) => {
+        if (i === N - 1) { c.classList.add('is-last'); return; }
+        c.style.setProperty('--s0', (100 * i / (N - 1)).toFixed(2) + '%');
+        c.style.setProperty('--sc', (1 - (N - 1 - i) * 0.045).toFixed(4));
+      });
+      doc.classList.add('stack-sda');
+    }
     onFrame(() => {
       layers();
+      if (SDA) return;
       const range = h - S.vh;
       const y = S.y - top;
       if (range <= 0 || y < -S.vh || y > h) return;
@@ -2259,8 +2274,9 @@ void main(){
     onFrame(now => {
       if (document.hidden || !W) return;
       const busy = Math.abs(S.vy) > 0.3 || Math.abs(warp) > 0.01 || shooters.length || (jump.t && now - jump.t < 1400) || !doc.classList.contains('is-ready');
-      // phones: 25 fps while the page rests, full speed while it moves
-      if (!fine && !busy && now - last < 40) return;
+      // phones: 25 fps while the page rests, full speed while it moves; weaker phones (is-lite) ~30 fps even while moving,
+      // so the scrolling itself keeps the frames
+      if (!fine && now - last < (!busy ? 40 : doc.classList.contains('is-lite') ? 32 : 0)) return;
       const dt = last ? Math.min(50, now - last) : 16;
       last = now;
       warp += (clamp(S.vy / 46, -1, 1) - warp) * 0.14;
@@ -2935,7 +2951,29 @@ void main(){
     if (window.IntersectionObserver && els.length) {
       const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('is-calm', !e.isIntersecting)), { rootMargin: '80px 0px' });
       els.forEach(el => io.observe(el));
+      // whole sections (and the fixed menu / intro when hidden) sleep off screen: their endless loops — star twinkles in
+      // the SVG constellations, clocks, marquees, spinning cubes, map pings — otherwise keep the phone recalculating
+      // styles and SVG layout every frame for things nobody sees. They wake 160px before they scroll in.
+      const zones = $$('main > section, .footer');
+      const zio = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('is-asleep', !e.isIntersecting)), { rootMargin: '160px 0px' });
+      zones.forEach(z => zio.observe(z));
+      // SVG (SMIL) packets in the AWS card are not touched by CSS: they invalidated SVG layout every frame, everywhere
+      const smil = $$('svg').filter(sv => sv.querySelector('animate, animateMotion, animateTransform') && sv.pauseAnimations);
+      const sio = new IntersectionObserver(es => es.forEach(e => (e.isIntersecting ? e.target.unpauseAnimations() : e.target.pauseAnimations())), { rootMargin: '80px 0px' });
+      smil.forEach(sv => sio.observe(sv));
     }
+    // a phone that cannot keep ~30 fps in the first seconds after the intro gets the lite rendering too
+    if (!fine && !lite) onReady(() => setTimeout(() => {
+      let n = 0;
+      let t0 = 0;
+      const probe = now => {
+        if (!t0) t0 = now;
+        n++;
+        if (now - t0 < 2000) { requestAnimationFrame(probe); return; }
+        if (n / ((now - t0) / 1000) < 32) doc.classList.add('is-lite');
+      };
+      requestAnimationFrame(probe);
+    }, 1500));
     // while the page moves (finger or auto-scroll) they hold still, so every frame goes to the scrolling itself
     let moving = false;
     let still = 0;
